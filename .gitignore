@@ -1,0 +1,13 @@
+/.well-known
+/cgi-bin
+scratch
+testing
+*.swp
+*.back
+backup/
+.pasteburnrc
+*.swp
+cover_db/
+.gitconfig
+pasteburn.sqlite3
+tmp/

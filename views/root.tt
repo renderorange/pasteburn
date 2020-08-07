@@ -1,0 +1,7 @@
+[% INCLUDE includes/header.tt
+   title = 'Sharable, encrypted, ephemeral pastebin'
+%]
+
+<h1>Paste a password, secret message, or private link below.</h1>
+
+[% INCLUDE includes/footer.tt %]

@@ -1,0 +1,14 @@
+[% INCLUDE includes/header.tt
+   title = 'Error'
+%]
+
+<h2>Error</h2>
+<p>
+[% IF message %]
+[% message %]
+[% ELSE %]
+Whoops, something went wrong on our end.
+[% END %]
+</p>
+
+[% INCLUDE includes/footer.tt %]

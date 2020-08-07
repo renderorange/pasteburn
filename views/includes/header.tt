@@ -1,0 +1,10 @@
+<html>
+
+<head>
+<title>Pasteburn - [% title %]</title>
+</head>
+
+<body>
+<nav id="mainnav">
+    <a id="home" href="/">Pasteburn</a>
+</nav>

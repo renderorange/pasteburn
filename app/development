@@ -1,0 +1,7 @@
+#!/bin/bash
+
+export PERL5LIB=~/git/pasteburn/lib:$PERL5LIB
+export DANCER_CONFDIR=./
+export DANCER_ENVIRONMENT=development
+
+plackup --loader Shotgun --port 5000 app.psgi

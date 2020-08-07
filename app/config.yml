@@ -1,0 +1,4 @@
+appname: 'pasteburn'
+startup_info: 1
+template: 'template_toolkit'
+views: '../views'

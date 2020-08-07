@@ -1,0 +1,11 @@
+logger: 'File'
+log_level: 'info'
+show_errors: 0
+warnings: 0
+traces: 0
+behind_proxy: 1
+engines:
+  logger:
+    File:
+      log_dir: '/var/log/pasteburn'
+      file_name: 'web.log'

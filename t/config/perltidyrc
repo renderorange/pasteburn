@@ -1,0 +1,34 @@
+-l=140   # Max line width is 140 cols
+-i=4     # Indent level is 4 cols
+-ci=4    # Continuation indent is 4 cols
+-vt=4    # Maximal vertical tightness
+-cti=0   # No extra indentation for closing brackets
+-pt=1    # Medium parenthesis tightness
+-sbt=1   # Medium square bracket tightness
+-bt=1    # Medium brace tightness (for non-code blocks)
+-bbt=1   # Medium block brace tightness (for code blocks)
+--nospace-for-semicolon
+-nolq    # Don't outdent long quoted strings
+         # Break before all operators:
+-wbb="% + - * / x != == >= <= =~ < > | & **= += *= &= <<= &&= -= /= |= >>= ||= .= %= ^= x="
+
+-fpsc=0  # Don't try to line up all comments to a fixed column
+-hsc     # Align hanging side comments
+-bbs     # Ensure a blank line before every sub definition (except one-liners)
+-bbb     # Ensure a blank line before code blocks (for, while, if, ....)
+
+-bar     # K&R style code braces
+-nolc    # Long comments indented, even when this make the total line length "too long"
+-noll    # Long lines indented, even when this make the total line length "too long"
+-nola    # Don't treat labels as special cases when indenting
+
+-nst     # Do NOT output to STDOUT (since we want to use -b)
+-b       # Backup the input file to .bak and perform all tidying in the original file
+-se      # Write errors to STDERR
+
+-it=4    # iterations
+--block-brace-vertical-tightness=1
+--nospace-terminal-semicolon
+--noadd-semicolons
+-nbl     # --noopening-brace-on-new-line
+--backup-file-extension=/    # delete bak file

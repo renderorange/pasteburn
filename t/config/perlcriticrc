@@ -1,0 +1,180 @@
+### PERLCRITIC OPTIONS
+color = 1
+verbose = %m at %f line %l [%p]\n
+severity = 2
+force = 1
+
+
+### POLICY SETTINGS
+# we don't unpack @_ right away as we mostly use named vars with defaults
+[-Subroutines::RequireArgUnpacking]
+
+# errstr for DBI is okay, and probably others since I like that convention.
+[Variables::ProhibitPackageVars]
+packages = DBI
+
+# HEREDOC doesn't adhere to my tidy eye
+[-ValuesAndExpressions::ProhibitImplicitNewlines]
+
+# don't require extended format for shortish regex
+# keeping this in here for documentation purposes
+[-RegularExpressions::RequireExtendedFormatting]
+#minimum_regex_length_to_complain_about = 60
+
+# don't require Carp
+[-ErrorHandling::RequireCarping]
+
+# postfix is okay, unless it's really weird
+[-ControlStructures::ProhibitPostfixControls]
+
+# needless ruleset for modern Perl versions
+[-ValuesAndExpressions::ProhibitInterpolationOfLiterals]
+
+# don't use backticks
+[InputOutput::ProhibitBacktickOperators]
+
+# 3 arg open is modern Perl
+[InputOutput::ProhibitTwoArgOpen]
+
+# close filehandles as soon as possible after opening them.
+[InputOutput::RequireBriefOpen]
+
+# forbid a bare `## no critic'
+# shouldn't be turning off critic anyway
+[Miscellanea::ProhibitUnrestrictedNoCritic]
+
+# Minimize complexity in code that is outside of subroutines.
+[-Modules::ProhibitExcessMainComplexity]
+max_mccabe = 28
+
+# write `require Module' instead of `require 'Module.pm''.
+[Modules::RequireBarewordIncludes]
+
+# end each module with an explicitly `1;' instead of some funky expression.
+# sorry Charles ;)
+[Modules::RequireEndWithOne]
+
+# always make the 'package' explicit.
+[Modules::RequireExplicitPackage]
+
+# package declaration must match filename.
+[Modules::RequireFilenameMatchesPackage]
+
+# Give every module a `$VERSION' number.
+[Modules::RequireVersionVar]
+
+# don't use vague variable or subroutine names like 'last' or 'record'.
+[NamingConventions::ProhibitAmbiguousNames]
+forbid = last left right no abstract contract record second close
+
+# write `@{ $array_ref }' instead of `@$array_ref'.
+# consistency mostly.  I don't really care either way, but should be consistent.
+[References::ProhibitDoubleSigils]
+
+## REGEX
+[RegularExpressions::ProhibitUnusedCapture]
+[RegularExpressions::ProhibitUnusualDelimiters]
+[-RegularExpressions::RequireDotMatchAnything]
+[-RegularExpressions::RequireLineBoundaryMatching]
+[-RegularExpressions::ProhibitEnumeratedClasses]
+
+# don't name things the same as other things
+[Subroutines::ProhibitBuiltinHomonyms]
+
+# too many arguments
+[Subroutines::ProhibitManyArgs]
+
+# don't write `sub my_function (@@) {}'.
+[Subroutines::ProhibitSubroutinePrototypes]
+
+# prevent unused private subroutines.
+[Subroutines::ProhibitUnusedPrivateSubroutines]
+
+# prevent access to private subs in other packages.
+[Subroutines::ProtectPrivateSubs]
+
+# end every path through a subroutine with an explicit `return' statement.
+[Subroutines::RequireFinalReturn]
+
+# shouldn't be turning these off or not defining these
+[TestingAndDebugging::ProhibitNoStrict]
+[TestingAndDebugging::ProhibitNoWarnings]
+[TestingAndDebugging::RequireUseStrict]
+[TestingAndDebugging::RequireUseWarnings]
+
+# unless is okay sometimes
+[-ControlStructures::ProhibitUnlessBlocks]
+
+# don't require constants inplace of magic variables
+# I'm still on the fence about this
+[-ValuesAndExpressions::ProhibitMagicNumbers]
+
+# don't require long number separation
+# this is a strange rule to keep since it's a perlism.
+# keeping this as a lint requirement creates a strange barrier for people
+# who aren't aware, including people not familiar with Perl.
+[-ValuesAndExpressions::RequireNumberSeparators]
+
+# don't prohibit constant pragma
+[-ValuesAndExpressions::ProhibitConstantPragma]
+
+
+## TODO: re-evaluate these
+# Write `q{}' instead of `'''.
+[ValuesAndExpressions::ProhibitEmptyQuotes]
+
+# Write ` !$foo && $bar || $baz ' instead of ` not $foo && $bar or $baz'.
+[ValuesAndExpressions::ProhibitMixedBooleanOperators]
+
+# Use `my' instead of `local', except when you have to.
+[Variables::ProhibitLocalVars]
+
+# Don't ask for storage you don't need.
+[Variables::ProhibitUnusedVariables]
+
+# don't use 'grep' in void contexts.
+[BuiltinFunctions::ProhibitVoidGrep]
+
+# don't use 'map' in void contexts.
+[BuiltinFunctions::ProhibitVoidMap]
+
+# don't use 'grep' in boolean context
+[BuiltinFunctions::ProhibitBooleanGrep]
+
+# Write `bless {}, $class;' instead of just `bless {};'.
+[ClassHierarchies::ProhibitOneArgBless]
+
+# Use spaces instead of tabs.
+[CodeLayout::ProhibitHardTabs]
+
+# Don't use whitespace at the end of lines.
+[CodeLayout::ProhibitTrailingWhitespace]
+
+# Use the same newline through the source.
+[CodeLayout::RequireConsistentNewlines]
+
+# Must run code through perltidy.
+[CodeLayout::RequireTidyCode]
+
+# Put a comma at the end of every multi-line list declaration, including the last one.
+[CodeLayout::RequireTrailingCommas]
+
+# Don't write long "if-elsif-elsif-elsif-elsif...else" chains.
+[ControlStructures::ProhibitCascadingIfElse]
+
+# Don't use operators like `not', `!~', and `le' within `until' and `unless'.
+[ControlStructures::ProhibitNegativeExpressionsInUnlessAndUntilConditions]
+
+# Don't write code after an unconditional `die, exit, or next'.
+[ControlStructures::ProhibitUnreachableCode]
+
+
+## POD
+# The `=head1 NAME' section should match the package.
+# [Documentation::RequirePackageMatchesPodName]
+
+# All POD should be after `__END__'.
+# [Documentation::RequirePodAtEnd]
+
+# Organize your POD into the customary sections.
+[-Documentation::RequirePodSections]

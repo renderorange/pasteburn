@@ -1,0 +1,43 @@
+/* redefine */
+
+body {
+    color: #333;
+}
+
+.container {
+    max-width: 650px;
+}
+
+#marketing {
+    margin-bottom: 1.4rem;
+}
+
+#marketing h1 {
+    font-size: 2.4rem;
+    margin-bottom: 0.25rem;
+}
+
+#marketing p {
+    color: #737373;
+    font-style: italic;
+    margin-bottom: 0;
+}
+
+@media (min-width: 550px) {
+    #marketing h1 { font-size: 2.8rem; }
+}
+
+textarea {
+    min-height: 100px;
+    margin-bottom: 1.7rem;
+}
+
+input[type="submit"].button-primary {
+    background-color: #686868;
+    border-color: #686868;
+}
+
+input[type="submit"].button-primary:hover {
+    background-color: #5b5b5b;
+    border-color: #5b5b5b;
+}

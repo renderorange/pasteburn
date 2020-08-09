@@ -2,6 +2,16 @@
    title = 'Sharable, encrypted, ephemeral pastebin'
 %]
 
+[% IF message %]
+<p>[% message %]</p>
+[% END %]
+
 <h1>Paste a password, secret message, or private link below.</h1>
+
+<form action="/" method="post">
+    <textarea name="secret">Secret content goes here...</textarea>
+    <input type="text" name="passphrase" placeholder="A word or phrase that's difficult to guess">
+    <input type="submit" value="Create">
+</form>
 
 [% INCLUDE includes/footer.tt %]

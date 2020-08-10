@@ -4,7 +4,7 @@
 [% IF message %]<p class="message">[% message %]</p>[% END %]
 <div id="marketing">
     <h1>Paste a secret message below.</h1>
-    <p>content can only be viewed with the passphrase (which we do not store)</p>
+    <p>content can only be viewed with the passphrase (which we do not know)</p>
 </div>
 
 <form action="/" method="post">

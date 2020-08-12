@@ -4,7 +4,8 @@ use Dancer2 appname => 'pasteburn';
 
 use HTTP::Status ();
 
-use Pasteburn::Controller::Root ();
+use Pasteburn::Controller::Root   ();
+use Pasteburn::Controller::Secret ();
 
 our $VERSION = '0.001';
 

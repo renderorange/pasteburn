@@ -9,6 +9,17 @@ use Pasteburn::Controller::Secret ();
 
 our $VERSION = '0.001';
 
+BEGIN {
+    require Pasteburn::Config;
+
+    my $conf = Pasteburn::Config->get();
+    config->{engines}{session}{Cookie}{secret_key} = $conf->{cookie}{secret_key};
+
+    unless ( config->{engines}{session}{Cookie}{secret_key} ) {
+        die("FATAL: session Cookie secret_key is not set");
+    }
+}
+
 any qr{.*} => sub {
     my $app = shift;
 

@@ -1,4 +1,13 @@
 appname: 'pasteburn'
 startup_info: 1
 template: 'template_toolkit'
+session: 'Cookie'
+engines:
+  session:
+    Cookie:
+      cookie_name: 'pasteburn'
+      cookie_same_site: 'Strict'
+      is_http_only: 1
+      default_duration: 604800
+      with_request_address: 1
 views: '../views'

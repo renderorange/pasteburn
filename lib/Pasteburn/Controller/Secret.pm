@@ -16,11 +16,25 @@ get q{/secret/:id} => sub {
 
     my $template_params = {
         uri     => request->uri_base,
-        route   => request->path,
         message => undef,
     };
 
-    # TODO: check session to make sure they created that id
+    # check the db for the secret.
+    my $secret_obj = Pasteburn::Model::Secrets->get( id => $id );
+    unless ($secret_obj) {
+        $template_params->{message} = 'That secret does not exist or has expired';
+        response->{status} = HTTP::Status::HTTP_NOT_FOUND;
+        return template secret => $template_params;
+    }
+
+    $template_params->{id} = $secret_obj->id;
+
+    # check the session to see if this user created the secret.
+    my $session_secrets = session->read('secrets');
+    if ( exists $session_secrets->{ $secret_obj->id } ) {
+        $template_params->{author} = 1;
+        return template secret => $template_params;
+    }
 
     return template secret => $template_params;
 };

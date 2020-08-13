@@ -31,7 +31,11 @@ post q{/} => sub {
     my $secret_obj = Pasteburn::Model::Secrets->new( secret => $secret, passphrase => $passphrase );
     $secret_obj->store;
 
-    # TODO: add the secret id and created_on to the secure session storage in the browser
+    # add the secret id and created_at to the user's secure session cookie so we
+    # can give different options in the secret view as the creator.
+    my $session_secrets = session->read('secrets');
+    $session_secrets->{ $secret_obj->id } = $secret_obj->created_at;
+    session->write( 'secrets', $session_secrets );
 
     redirect '/secret/' . $secret_obj->id;
 };

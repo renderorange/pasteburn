@@ -208,4 +208,27 @@ sub validate_passphrase {
     return $crypt->validate( hash => $self->passphrase, string => $arg->{passphrase} );
 }
 
+sub decode_secret {
+    my $self = shift;
+    my $arg  = {
+        passphrase => undef,
+        @_,
+    };
+
+    unless ( Scalar::Util::blessed($self) ) {
+        die "decrypt_secret must be called as an object method";
+    }
+
+    unless ( $self->id ) {
+        die "decrypt_secret cannot be run for a nonexistent secret";
+    }
+
+    unless ( $arg->{passphrase} ) {
+        die "passphrase is required";
+    }
+
+    my $crypt_storage = Pasteburn::Crypt::Storage->new( passphrase => $arg->{passphrase} );
+    return $crypt_storage->decode( secret => $self->secret );
+}
+
 1;

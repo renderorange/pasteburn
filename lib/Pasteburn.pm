@@ -63,3 +63,31 @@ hook on_route_exception => sub {
 };
 
 1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+Pasteburn - Sharable, encrypted, ephemeral pastebin.
+
+=head1 DESCRIPTION
+
+Pasteburn is a web application for encrypting and sharing ephemeral content.
+
+Content is automatically deleted when decrypted or stored a maximum of 7 days, then automatically deleted.
+
+Pasteburn is written in Perl using the Dancer2 framework.
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2020 by Blaine Motsinger.
+
+This is free software; you can redistribute it and/or modify it under the same terms as the Perl 5 programming language system itself.
+
+=head1 AUTHOR
+
+Blaine Motsinger C<blaine@renderorange.com>
+
+=cut

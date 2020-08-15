@@ -2,6 +2,7 @@ package Pasteburn;
 
 use Dancer2 appname => 'pasteburn';
 
+use Time::Piece;
 use HTTP::Status ();
 
 use Pasteburn::Controller::Root   ();
@@ -19,6 +20,21 @@ BEGIN {
         die("FATAL: session Cookie secret_key is not set");
     }
 }
+
+hook before => sub {
+    my $app = shift;
+
+    my $time            = localtime;
+    my $now             = $time->epoch;
+    my $session_secrets = session->read('secrets');
+    foreach my $session_id ( keys %{$session_secrets} ) {
+        my $created_at = $session_secrets->{$session_id};
+        if ( $created_at + ( 86400 * 7 ) <= $now ) {
+            delete $session_secrets->{$session_id};
+        }
+    }
+    session->write( 'secrets', $session_secrets );
+};
 
 any qr{.*} => sub {
     my $app = shift;

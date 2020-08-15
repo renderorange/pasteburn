@@ -1,0 +1,24 @@
+requires 'Config::Tiny';
+requires 'Crypt::PBKDF2';
+requires 'Cwd';
+requires 'DBD::SQLite';
+requires 'DBI';
+requires 'Dancer2';
+requires 'Dancer2::Session::Cookie';
+requires 'Data::Structure::Util';
+requires 'Digest::SHA';
+requires 'HTTP::Status';
+requires 'Moo';
+requires 'MooX::ClassAttribute';
+requires 'Plack::Middleware::TrailingSlashKiller';
+requires 'Scalar::Util';
+requires 'Session::Storage::Secure';
+requires 'Template::Toolkit';
+requires 'Time::Piece';
+requires 'Try::Tiny';
+requires 'Types::Common::Numeric';
+requires 'Types::Common::String';
+requires 'namespace::clean';
+requires 'strictures';
+
+test_requires 'Test::More';

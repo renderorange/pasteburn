@@ -22,6 +22,12 @@ get q{/secret/:id} => sub {
     # check the db for the secret.
     my $secret_obj = Pasteburn::Model::Secrets->get( id => $id );
     unless ($secret_obj) {
+        my $session_secrets = session->read('secrets');
+        if ( exists $session_secrets->{$id} ) {
+            delete $session_secrets->{$id};
+            session->write( 'secrets', $session_secrets );
+        }
+
         $template_params->{message} = 'That secret does not exist or has expired';
         response->{status} = HTTP::Status::HTTP_NOT_FOUND;
         return template secret => $template_params;
@@ -72,6 +78,14 @@ post q{/secret/:id} => sub {
 
     my $decoded_secret = $secret_obj->decode_secret( passphrase => $passphrase );
     if ($decoded_secret) {
+
+        # this will not delete from the author session unless they also view it.
+        my $session_secrets = session->read('secrets');
+        delete $session_secrets->{ $secret_obj->id };
+        session->write( 'secrets', $session_secrets );
+
+        $secret_obj->delete_secret;
+
         $template_params->{secret} = $decoded_secret;
         return template secret => $template_params;
     }

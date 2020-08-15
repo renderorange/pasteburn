@@ -231,4 +231,32 @@ sub decode_secret {
     return $crypt_storage->decode( secret => $self->secret );
 }
 
+sub delete_secret {
+    my $self = shift;
+
+    unless ( Scalar::Util::blessed($self) ) {
+        die "delete must be called as an object method";
+    }
+
+    unless ( $self->id ) {
+        die "delete cannot be run for a nonexistent secret";
+    }
+
+    my $sql = q{
+        DELETE FROM secrets
+        WHERE id = ?
+        };
+
+    my $result = try {
+        return $self->_dbh->do( $sql, undef, $self->id );
+    }
+    catch {
+        my $exception = $_;
+        die "delete secret failed: $exception";
+    };
+
+    undef $self;
+    return $result;
+}
+
 1;

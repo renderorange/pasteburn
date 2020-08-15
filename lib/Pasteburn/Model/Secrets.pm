@@ -3,10 +3,11 @@ package Pasteburn::Model::Secrets;
 use strictures version => 2;
 
 use Types::Common::String qw{ NonEmptyStr };
-use DateTime::Format::Strptime ();
+use Types::Common::Numeric qw{ PositiveInt };
 
 use Pasteburn::DB ();
 
+use Time::Piece;
 use Try::Tiny;
 use Scalar::Util ();
 
@@ -41,16 +42,9 @@ has secret => (
 );
 
 has created_at => (
-    is  => 'rwp',
-    isa => sub {
-        my $strp = DateTime::Format::Strptime->new(
-            pattern  => '%Y-%m-%d %H:%M:%S',
-            on_error => 'undef'
-        );
-        unless ( $strp->parse_datetime( $_[0] ) ) {
-            die "not a valid created_at type";
-        }
-    },
+    is     => 'rwp',
+    isa    => PositiveInt,
+    writer => '_set_created_at',
 );
 
 class_has _dbh => (
@@ -120,12 +114,13 @@ sub store {
 
     my $sql = q{
         INSERT INTO secrets
-            ( id, passphrase, secret )
+            ( id, passphrase, secret, created_at )
         VALUES
-            ( ?, ?, ? )
+            ( ?, ?, ?, ? )
         };
 
-    my @bind_values = ( $id, $hashed_passphrase, $encoded_secret );
+    my $time        = localtime;
+    my @bind_values = ( $id, $hashed_passphrase, $encoded_secret, $time->epoch );
 
     my $result = try {
         return $self->_dbh->do( $sql, undef, @bind_values );

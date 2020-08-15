@@ -14,10 +14,7 @@ get q{/secret} => sub {
 get q{/secret/:id} => sub {
     my $id = route_parameters->get('id');
 
-    my $template_params = {
-        uri     => request->uri_base,
-        message => undef,
-    };
+    my $template_params = { message => undef, };
 
     # check the db for the secret.
     my $secret_obj = Pasteburn::Model::Secrets->get( id => $id );

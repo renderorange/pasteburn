@@ -28,6 +28,18 @@ post q{/} => sub {
         return template root => $template_params;
     }
 
+    if ( length $secret > 10000 ) {
+        $template_params->{message} = 'The secret parameter cannot be greater than 10000';
+        response->{status} = HTTP::Status::HTTP_BAD_REQUEST;
+        return template root => $template_params;
+    }
+
+    if ( length $passphrase > 100 ) {
+        $template_params->{message} = 'The passphrase parameter cannot be greater than 100';
+        response->{status} = HTTP::Status::HTTP_BAD_REQUEST;
+        return template root => $template_params;
+    }
+
     my $secret_obj = Pasteburn::Model::Secrets->new( secret => $secret, passphrase => $passphrase );
     $secret_obj->store;
 

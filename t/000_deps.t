@@ -22,8 +22,6 @@ my @required_modules = qw{
     Template::Toolkit
     Time::Piece
     Try::Tiny
-    Types::Common::Numeric
-    Types::Common::String
     namespace::clean
     strictures
 };

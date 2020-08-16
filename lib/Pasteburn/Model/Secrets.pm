@@ -2,9 +2,6 @@ package Pasteburn::Model::Secrets;
 
 use strictures version => 2;
 
-use Types::Common::String qw{ NonEmptyStr };
-use Types::Common::Numeric qw{ PositiveInt };
-
 use Pasteburn::DB ();
 
 use Time::Piece;
@@ -22,28 +19,44 @@ use namespace::clean;
 our $VERSION = '0.001';
 
 has id => (
-    is     => 'rwp',
-    isa    => NonEmptyStr,
+    is  => 'rwp',
+    isa => sub {
+        if ( length $_[0] != 64 ) {
+            die "id must have a length == 64\n";
+        }
+    },
     writer => '_set_id',
 );
 
 has passphrase => (
     is       => 'rw',
     required => 1,
-    isa      => NonEmptyStr,
-    writer   => '_set_passphrase',
+    isa      => sub {
+        if ( !defined $_[0] ) {
+            die "passphrase must be a non empty string\n";
+        }
+    },
+    writer => '_set_passphrase',
 );
 
 has secret => (
     is       => 'rw',
     required => 1,
-    isa      => NonEmptyStr,
-    writer   => '_set_secret',
+    isa      => sub {
+        if ( !defined $_[0] ) {
+            die "secret must be a non empty string\n";
+        }
+    },
+    writer => '_set_secret',
 );
 
 has created_at => (
-    is     => 'rwp',
-    isa    => PositiveInt,
+    is  => 'rwp',
+    isa => sub {
+        if ( length $_[0] != 10 ) {
+            die "created_at must have a length == 10\n";
+        }
+    },
     writer => '_set_created_at',
 );
 

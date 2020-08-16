@@ -16,8 +16,6 @@ requires 'Session::Storage::Secure';
 requires 'Template::Toolkit';
 requires 'Time::Piece';
 requires 'Try::Tiny';
-requires 'Types::Common::Numeric';
-requires 'Types::Common::String';
 requires 'namespace::clean';
 requires 'strictures';
 

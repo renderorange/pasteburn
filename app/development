@@ -1,7 +1,10 @@
 #!/bin/bash
 
-export PERL5LIB=~/git/pasteburn/lib:$PERL5LIB
-export DANCER_CONFDIR=./
+DIRNAME=$(dirname "$0")
+APPDIR=$(realpath "$DIRNAME")
+LIBDIR=$(realpath "$DIRNAME/../lib")
+export PERL5LIB=$LIBDIR:$PERL5LIB
+export DANCER_CONFDIR=$APPDIR
 export DANCER_ENVIRONMENT=development
 
-plackup --loader Shotgun --port 5000 app.psgi
+plackup --loader Shotgun --port 5000 "$APPDIR/app.psgi"

@@ -19,6 +19,12 @@ BEGIN {
     unless ( config->{engines}{session}{Cookie}{secret_key} ) {
         die("FATAL: session Cookie secret_key is not set");
     }
+
+    set views => config->{appdir} . 'views';
+
+    unless ( config->{views} ) {
+        die("FATAL: views is not set");
+    }
 }
 
 hook before => sub {

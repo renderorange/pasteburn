@@ -2,15 +2,15 @@ package Pasteburn::DB;
 
 use strictures version => 2;
 
+use Pasteburn::Config;
+
 use Cwd ();
 use DBI;
 
 our $VERSION = '0.001';
 
 sub connect_db {
-    my $db = load();
-
-    my $dsn = "dbi:SQLite:dbname=$db";
+    my $dsn = load();
     my $dbh = DBI->connect(
         $dsn, undef, undef,
         {   PrintError       => 0,
@@ -24,15 +24,19 @@ sub connect_db {
 }
 
 sub load {
-    my $module_path = Cwd::realpath(__FILE__);
-    $module_path =~ s/\w+\.pm//;
-    my $db = Cwd::realpath( $module_path . '/../../db/pasteburn.sqlite3' );
+    my $conf = Pasteburn::Config->get();
 
-    unless ( -f $db ) {
-        die "$db is not readable";
+    if ( $conf->{database}{type} eq 'sqlite' ) {
+        my $module_path = Cwd::realpath(__FILE__);
+        $module_path =~ s/\w+\.pm//;
+        my $db = Cwd::realpath( $module_path . '/../../db/pasteburn.sqlite3' );
+
+        unless ( -f $db ) {
+            die "$db is not readable";
+        }
+
+        return "dbi:SQLite:dbname=$db";
     }
-
-    return $db;
 }
 
 1;

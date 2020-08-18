@@ -1,2 +1,5 @@
 [cookie]
 secret_key = default
+
+[database]
+type = sqlite

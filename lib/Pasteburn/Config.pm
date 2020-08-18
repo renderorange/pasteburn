@@ -61,8 +61,16 @@ sub _validate {
         die "config section database type is required\n";
     }
 
-    unless ( List::MoreUtils::any { $config->{database}{type} eq $_ } (qw{ sqlite }) ) {
+    unless ( List::MoreUtils::any { $config->{database}{type} eq $_ } (qw{ sqlite mysql }) ) {
         die "config section database type " . $config->{database}{type} . " is unknown\n";
+    }
+
+    if ( $config->{database}{type} eq 'mysql' ) {
+        foreach my $required (qw{ hostname port dbname username password }) {
+            unless ( exists $config->{database}{$required} ) {
+                die "config section database $required is required\n";
+            }
+        }
     }
 
     return 1;

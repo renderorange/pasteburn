@@ -10,9 +10,10 @@ use DBI;
 our $VERSION = '0.001';
 
 sub connect_db {
-    my $dsn = load();
+    my ( $dsn, $user, $password ) = load();
     my $dbh = DBI->connect(
-        $dsn, undef, undef,
+        $dsn, $user,
+        $password,
         {   PrintError       => 0,
             RaiseError       => 1,
             AutoCommit       => 1,
@@ -35,7 +36,13 @@ sub load {
             die "$db is not readable";
         }
 
-        return "dbi:SQLite:dbname=$db";
+        return ( "dbi:SQLite:dbname=$db", undef, undef );
+    }
+    elsif ( $conf->{database}{type} eq 'mysql' ) {
+        return (
+            "dbi:mysql:database=" . $conf->{database}{dbname} . ";host=" . $conf->{database}{hostname} . ";port=" . $conf->{database}{port},
+            $conf->{database}{username}, $conf->{database}{password}
+        );
     }
 }
 

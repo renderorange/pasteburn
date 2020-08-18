@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS `secrets` (
+    id         CHAR(64) NOT NULL,
+    passphrase VARCHAR(223) NOT NULL,
+    secret     VARCHAR(749) NOT NULL,
+    created_at INT(10) SIGNED NOT NULL
+);

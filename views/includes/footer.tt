@@ -1,5 +1,12 @@
 </div>
 </div>
+<div class="row">
+    <div id="footer">
+        <a href="/">home</a>
+        <a href="https://dev.adventurehound.io/renderorange/pasteburn">code</a>
+        <a href="/about">about</a>
+    </div>
+</div>
 </div>
 </body>
 

@@ -7,6 +7,7 @@ use HTTP::Status ();
 
 use Pasteburn::Controller::Root   ();
 use Pasteburn::Controller::Secret ();
+use Pasteburn::Controller::About  ();
 
 our $VERSION = '0.001';
 

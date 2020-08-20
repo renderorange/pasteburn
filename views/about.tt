@@ -1,0 +1,24 @@
+[% INCLUDE includes/header.tt
+   title = 'Sharable, encrypted, ephemeral pastebin'
+%]
+[% IF message %]<p class="message">[% message %]</p>[% END %]
+<div id="marketing">
+    <h1>About.</h1>
+</div>
+
+<h2>FAQ</h2>
+<h3>Can you see my secrets?</h3>
+<p>Secrets are encrypted using the passphrase you provide. Passphrases are hashed. The secret and passphrase in the database look like random text we can't read and can't decrypt without the passphrase.</p>
+
+<h3>I don't trust your website. How do I know you're not reading my secrets?</h3>
+<p>All of the code for this project is <a href="https://dev.adventurehound.io/renderorange/pasteburn">open source and available to read</a>. Installation instructions [are being added soon] if you'd prefer to run this project on your own infrastructure.</p>
+
+<h3>Who made this?</h3>
+<p>My name is Blaine Motsinger. Feel free to <a href="mailto:Blaine Motsinger <blaine@renderorange.com>">email me</a> if you'd like to chat.</p>
+
+<h2>Colophon</h2>
+<h3>Technologies this project uses</h3>
+<p>Pasteburn is built in Perl using the Dancer2 framework. Additional Perl dependencies are listed in the <a href="https://dev.adventurehound.io/renderorange/pasteburn">Pasteburn repo</a>.</p>
+<p>The UI uses the <a href="http://getskeleton.com/">Skeleton CSS boilerplate</a>. License information is available in the <a href="https://dev.adventurehound.io/renderorange/pasteburn">Pasteburn repo</a>.</p>
+
+[% INCLUDE includes/footer.tt %]

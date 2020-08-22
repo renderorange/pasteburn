@@ -1,17 +1,3 @@
-# Pasteburn
-
-Sharable, encrypted, ephemeral pastebin.
-
-## DESCRIPTION
-
-Pasteburn is a web application for encrypting and sharing ephemeral content.
-
-Content is automatically deleted when decrypted or stored a maximum of 7 days, then automatically deleted.
-
-Pasteburn is written in Perl using the Dancer2 framework.
-
-## COPYRIGHT AND LICENSE
-
 MIT License
 
 Copyright (c) 2020 Blaine Motsinger
@@ -33,7 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-## AUTHOR
-
-Blaine Motsinger <blaine@renderorange.com>

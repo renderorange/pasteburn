@@ -51,6 +51,7 @@ form {
 
 textarea {
     min-height: 100px;
+    margin-bottom: 1rem;
 }
 
 input[type="submit"].button-primary {
@@ -67,7 +68,7 @@ div#actions {
     width: 100%;
 }
 
-div#actions a.button {
+div#actions a.button.half-width {
     width: 49%;
     margin-right: 0.25rem;
 }

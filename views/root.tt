@@ -12,6 +12,6 @@
 <p>We can't read the messages once they're stored, and can't restore them once they're gone.</p>
 <p>Be careful to not share the link and passphrase together where other people can see them like email or chat. <span class="bold italic">Your secret is not secret with the passphrase.</span></p>
 
-<a class="button" href="/secret">Create a secret</a>
+<a class="button u-full-width" href="/secret">Create a secret</a>
 
 [% INCLUDE includes/footer.tt %]

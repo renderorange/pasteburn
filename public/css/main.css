@@ -29,6 +29,14 @@ h3 {
     font-weight: bold;
 }
 
+p {
+    margin-bottom: 1.1rem;
+}
+
+form {
+    margin-bottom: 0;
+}
+
 #marketing p {
     color: #737373;
     font-style: italic;
@@ -43,7 +51,6 @@ h3 {
 
 textarea {
     min-height: 100px;
-    margin-bottom: 1.7rem;
 }
 
 input[type="submit"].button-primary {
@@ -57,7 +64,7 @@ input[type="submit"].button-primary:hover {
 }
 
 #footer {
-    margin-top: 0.25rem;
+    margin-top: 0.75rem;
 }
 
 #footer a {
@@ -67,4 +74,12 @@ input[type="submit"].button-primary:hover {
     text-transform: uppercase;
     letter-spacing: 0.1rem;
     padding-right: 1rem;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.italic {
+    font-style: italic;
 }

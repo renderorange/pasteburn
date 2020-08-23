@@ -3,7 +3,7 @@
 %]
 [% IF message %]<p class="message">[% message %]</p>[% END %]
 <div id="marketing">
-    <h1>About.</h1>
+    <h1>About</h1>
 </div>
 
 <h2>FAQ</h2>

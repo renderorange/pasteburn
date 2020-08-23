@@ -89,6 +89,7 @@ get q{/secret/:id} => sub {
 post q{/secret/:id} => sub {
     my $id         = route_parameters->get('id');
     my $passphrase = body_parameters->get('passphrase');
+    my $run_mode   = body_parameters->get('rm');
 
     my $template_params = {
         route   => request->path,
@@ -100,6 +101,17 @@ post q{/secret/:id} => sub {
     unless ($secret_obj) {
         $template_params->{message} = 'That secret does not exist or has expired';
         response->{status} = HTTP::Status::HTTP_NOT_FOUND;
+        return template secret => $template_params;
+    }
+
+    if ( $run_mode eq 'del' ) {
+        my $session_secrets = session->read('secrets');
+        delete $session_secrets->{ $secret_obj->id };
+        session->write( 'secrets', $session_secrets );
+
+        $secret_obj->delete_secret;
+
+        $template_params->{message} = 'The secret has been deleted';
         return template secret => $template_params;
     }
 

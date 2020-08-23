@@ -63,6 +63,30 @@ input[type="submit"].button-primary:hover {
     border-color: #5b5b5b;
 }
 
+div#actions {
+    width: 100%;
+}
+
+div#actions a.button {
+    width: 49%;
+    margin-right: 0.25rem;
+}
+
+div#actions input#delete {
+    width: 99%;
+    border-color: rgba(158,28,35,.2);
+    background-color: #ffe3e6;
+}
+
+div#actions input#delete:hover {
+    border-color: rgba(158,28,35,0.42);
+    background-color: #fde1e4;
+}
+
+div#actions form#delete_form {
+    display: hidden;
+}
+
 #footer {
     margin-top: 0.75rem;
 }

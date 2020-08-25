@@ -63,6 +63,10 @@ textarea {
     resize: none;
 }
 
+input[type="text"]:focus, textarea:focus {
+    border-color: #5b5b5b;
+}
+
 input[type="submit"].button-primary {
     background-color: #686868;
     border-color: #686868;

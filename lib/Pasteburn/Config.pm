@@ -77,3 +77,61 @@ sub _validate {
 }
 
 1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+Pasteburn::Config - load and return the project config
+
+=head1 SYNOPSIS
+
+ use Pasteburn::Config;
+ my $config = Pasteburn::Config->get();
+
+=head1 DESCRIPTION
+
+C<Pasteburn::Config> loads the project config from the project dir location and returns
+it to the caller.
+
+=head1 METHODS
+
+=over
+
+=item get
+
+Load the config and return a C<Pasteburn::Config> object.
+
+=item load_config
+
+Read the config from disk, verify, then return it's content.
+
+=back
+
+=head1 CONFIGURATION
+
+C<Pasteburn::Config> takes configuration options from the C<.pasteburnrc>
+file within the project directory.
+
+The C<cookie> and C<database> keys are required.
+
+ [cookie]
+ secret_key = default
+
+ [database]
+ type = mysql
+ hostname = 127.0.0.1
+ port = 3306
+ dbname = pasteburn
+ username = pasteburn
+ password = password
+
+An example config is provided as a starting point.
+
+=head1 AUTHOR
+
+Blaine Motsinger C<blaine@renderorange.com>
+
+=cut

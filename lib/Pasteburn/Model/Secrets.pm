@@ -268,3 +268,213 @@ sub delete_secret {
 }
 
 1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+Pasteburn::Model::Secrets - data access layer for Secrets
+
+=head1 SYNOPSIS
+
+ use Pasteburn::Model::Secrets ();
+
+ my $secret_obj = Pasteburn::Model::Secrets->new( secret => $secret, passphrase => $passphrase );
+ $secret_obj->store;
+
+ my $secret_obj = Pasteburn::Model::Secrets->get( id => $id );
+ $secret_obj->validate_passphrase( passphrase => $passphrase );
+ my $decoded_secret = $secret_obj->decode_secret( passphrase => $passphrase );
+
+ $secret_obj->delete_secret;
+
+=head1 DESCRIPTION
+
+C<Pasteburn::Model::Secrets> provides an object oriented data layer for interacting with the secrets table.
+
+=head1 SUBROUTINES/METHODS
+
+=head2 new
+
+Class constructor for the Pasteburn::Model::Secrets object to create new secrets entries.
+
+=head3 ARGUMENTS
+
+=over
+
+=item secret
+
+=item passphrase
+
+=back
+
+=head3 RETURNS
+
+Pasteburn::Model::Secrets object.
+
+=head2 get
+
+Class constructor for the Pasteburn::Model::Secrets object to get secrets entries.
+
+=head3 ARGUMENTS
+
+=over
+
+=item id
+
+=back
+
+=head3 RETURNS
+
+Secrets object containing the columns for the row.
+
+=head2 store
+
+Object method to write the object attributes to the secrets table.
+
+Encodes the secret and hashes the passphrase before storing.
+
+=head3 ARGUMENTS
+
+None.
+
+=head3 RETURNS
+
+The result of the database action.
+
+The DBI action is processed with DBI->do, returning the number of updated or inserted rows.
+
+The store method returns the return from the do method, which can be checked for truthy if success.
+
+=head2 _generate_id
+
+Interal method to generate the sha256_hex string to use as id.
+
+=head3 ARGUMENTS
+
+None.
+
+=head3 RETURNS
+
+sha256_hex string.
+
+=head2 _update_object
+
+Internal method to update the secret object with columns from the database.
+
+=head3 ARGUMENTS
+
+None.
+
+=head3 RETURNS
+
+Nothing.
+
+The retrieved columns from the secret record in the database are updated in the object.
+
+=head2 validate_passphrase
+
+Object method to validate the submitted passphrase with the stored hashed passphrase.
+
+=head3 ARGUMENTS
+
+=over
+
+=item passphrase
+
+=back
+
+=head3 RETURNS
+
+True or false if the string matches or not.
+
+=head2 decode_secret
+
+Object method to decode the stored secret using the submitted passphrase.
+
+=head3 ARGUMENTS
+
+=over
+
+=item passphrase
+
+=back
+
+=head3 RETURNS
+
+The decoded secret or undef if decoding is successful or unsuccessful.
+
+=head2 delete_secret
+
+Object method to delete the stored secret row and undef the object.
+
+=head3 ARGUMENTS
+
+None.
+
+=head3 RETURNS
+
+The result of the database operation to delete the row.
+
+=head1 OBJECT ATTRIBUTES
+
+Apart from the arguments in the constructor, the object contains the following attributes.
+
+The attributes below all correspond to columns in the secrets table.
+
+=over
+
+=item id
+
+=item passphrase
+
+=item secret
+
+=item created_at
+
+=back
+
+=head1 CLASS ATTRIBUTES
+
+Class attributes not corresponding to a row in the secrets table.
+
+=over
+
+=item _dbh
+
+Available database handle.
+
+=back
+
+=head1 COPYRIGHT AND LICENSE
+
+MIT License
+
+Copyright (c) 2020 Blaine Motsinger
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+=head1 AUTHOR
+
+Blaine Motsinger C<blaine@renderorange.com>
+
+=cut

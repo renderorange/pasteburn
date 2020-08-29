@@ -1,7 +1,6 @@
 [% INCLUDE includes/header.tt
    title = 'Sharable, encrypted, ephemeral pastebin'
 %]
-[% IF message %]<p class="message">[% message %]</p>[% END %]
 <div id="marketing">
     <h1>About</h1>
 </div>

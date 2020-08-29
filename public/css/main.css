@@ -121,3 +121,28 @@ div#actions form#delete_form {
 .italic {
     font-style: italic;
 }
+
+/* flash messages */
+p.message {
+    display: inline-block;
+    height: 38px;
+    padding: 0 30px;
+    letter-spacing: 0.09rem;
+    line-height: 38px;
+    text-transform: uppercase;
+    text-align: center;
+    border-radius: 4px;
+    border: 1px solid #bbb;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+p.message.success {
+    background-color: #d4edda;
+    border-color: #88b192;
+}
+
+p.message.error {
+    background-color: #f8d7da;
+    border-color: rgba(158,28,35,0.42);
+}

@@ -21,24 +21,28 @@ post q{/secret} => sub {
     my $passphrase = body_parameters->get('passphrase');
 
     my $template_params = {
-        route   => request->path,
-        message => undef,
+        route        => request->path,
+        message_type => 'success',
+        message      => undef,
     };
 
     unless ( $secret && $passphrase ) {
-        $template_params->{message} = 'The secret and passphrase parameters are required';
+        $template_params->{message_type} = 'error';
+        $template_params->{message}      = 'The secret and passphrase parameters are required';
         response->{status} = HTTP::Status::HTTP_BAD_REQUEST;
         return template secret => $template_params;
     }
 
     if ( length $secret > 10000 ) {
-        $template_params->{message} = 'The secret parameter cannot be greater than 10000';
+        $template_params->{message_type} = 'error';
+        $template_params->{message}      = 'The secret parameter cannot be greater than 10000';
         response->{status} = HTTP::Status::HTTP_BAD_REQUEST;
         return template secret => $template_params;
     }
 
     if ( length $passphrase > 100 ) {
-        $template_params->{message} = 'The passphrase parameter cannot be greater than 100';
+        $template_params->{message_type} = 'error';
+        $template_params->{message}      = 'The passphrase parameter cannot be greater than 100';
         response->{status} = HTTP::Status::HTTP_BAD_REQUEST;
         return template secret => $template_params;
     }
@@ -52,13 +56,14 @@ post q{/secret} => sub {
     $session_secrets->{ $secret_obj->id } = $secret_obj->created_at;
     session->write( 'secrets', $session_secrets );
 
-    redirect '/secret/' . $secret_obj->id;
+    redirect '/secret/' . $secret_obj->id . '?rm=new';
 };
 
 get q{/secret/:id} => sub {
-    my $id = route_parameters->get('id');
+    my $id       = route_parameters->get('id');
+    my $run_mode = query_parameters->get('rm');
 
-    my $template_params = { message => undef, };
+    my $template_params = { message_type => 'success', message => undef, };
 
     # check the db for the secret.
     my $secret_obj = Pasteburn::Model::Secrets->get( id => $id );
@@ -69,7 +74,8 @@ get q{/secret/:id} => sub {
             session->write( 'secrets', $session_secrets );
         }
 
-        $template_params->{message} = 'That secret does not exist or has expired';
+        $template_params->{message_type} = 'error';
+        $template_params->{message}      = 'That secret does not exist or has expired';
         response->{status} = HTTP::Status::HTTP_NOT_FOUND;
         return template secret => $template_params;
     }
@@ -79,6 +85,9 @@ get q{/secret/:id} => sub {
     # check the session to see if this user created the secret.
     my $session_secrets = session->read('secrets');
     if ( exists $session_secrets->{ $secret_obj->id } ) {
+        $template_params->{message} = 'The secret has been created'
+            if $run_mode && $run_mode eq 'new';
+
         $template_params->{author} = 1;
         return template secret => $template_params;
     }
@@ -92,14 +101,16 @@ post q{/secret/:id} => sub {
     my $run_mode   = body_parameters->get('rm');
 
     my $template_params = {
-        route   => request->path,
-        message => undef,
+        route        => request->path,
+        message_type => 'success',
+        message      => undef,
     };
 
     # check the db for the secret.
     my $secret_obj = Pasteburn::Model::Secrets->get( id => $id );
     unless ($secret_obj) {
-        $template_params->{message} = 'That secret does not exist or has expired';
+        $template_params->{message_type} = 'error';
+        $template_params->{message}      = 'That secret does not exist or has expired';
         response->{status} = HTTP::Status::HTTP_NOT_FOUND;
         return template secret => $template_params;
     }
@@ -118,13 +129,15 @@ post q{/secret/:id} => sub {
     $template_params->{id} = $secret_obj->id;
 
     unless ($passphrase) {
-        $template_params->{message} = 'The passphrase parameter is required';
+        $template_params->{message_type} = 'error';
+        $template_params->{message}      = 'The passphrase parameter is required';
         response->{status} = HTTP::Status::HTTP_BAD_REQUEST;
         return template secret => $template_params;
     }
 
     unless ( $secret_obj->validate_passphrase( passphrase => $passphrase ) ) {
-        $template_params->{message} = 'That passphrase is not correct';
+        $template_params->{message_type} = 'error';
+        $template_params->{message}      = 'That passphrase is not correct';
         response->{status} = HTTP::Status::HTTP_UNAUTHORIZED;
         return template secret => $template_params;
     }
@@ -139,13 +152,15 @@ post q{/secret/:id} => sub {
 
         $secret_obj->delete_secret;
 
-        $template_params->{secret} = $decoded_secret;
+        $template_params->{message} = 'The secret has been decrypted';
+        $template_params->{secret}  = $decoded_secret;
         return template secret => $template_params;
     }
 
     log( 'error', 'decoding came back empty, even though the passphrase is correct' );
     response->{status} = HTTP::Status::HTTP_INTERNAL_SERVER_ERROR;
-    $template_params->{message} = "Whoops, something went wrong on our end";
+    $template_params->{message_type} = 'error';
+    $template_params->{message}      = "Whoops, something went wrong on our end";
     return template secret => $template_params;
 };
 

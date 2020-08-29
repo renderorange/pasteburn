@@ -224,11 +224,11 @@ sub decode_secret {
     };
 
     unless ( Scalar::Util::blessed($self) ) {
-        die "decrypt_secret must be called as an object method";
+        die "decode_secret must be called as an object method";
     }
 
     unless ( $self->id ) {
-        die "decrypt_secret cannot be run for a nonexistent secret";
+        die "decode_secret cannot be run for a nonexistent secret";
     }
 
     unless ( $arg->{passphrase} ) {
@@ -243,11 +243,11 @@ sub delete_secret {
     my $self = shift;
 
     unless ( Scalar::Util::blessed($self) ) {
-        die "delete must be called as an object method";
+        die "delete_secret must be called as an object method";
     }
 
     unless ( $self->id ) {
-        die "delete cannot be run for a nonexistent secret";
+        die "delete_secret cannot be run for a nonexistent secret";
     }
 
     my $sql = q{

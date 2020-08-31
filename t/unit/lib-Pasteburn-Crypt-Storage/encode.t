@@ -5,8 +5,6 @@ use FindBin ();
 use lib "$FindBin::RealBin/../../../lib", "$FindBin::RealBin/../../lib";
 use Pasteburn::Test;
 
-use Test::Exception;
-
 my $class = 'Pasteburn::Crypt::Storage';
 use_ok( $class );
 

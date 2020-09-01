@@ -23,3 +23,4 @@ requires 'strictures';
 test_requires 'Test::More';
 test_requires 'Test::Warnings';
 test_requires 'Test::Exception';
+test_requires 'Test::Deep';

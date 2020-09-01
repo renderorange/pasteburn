@@ -8,22 +8,26 @@ use Pasteburn::Test;
 my $class = 'Pasteburn::Crypt::Storage';
 use_ok( $class );
 
-my $crypt = $class->new( passphrase => 'test' );
-isa_ok( $crypt, $class );
+CONSTRUCTOR: {
+    note( 'constructor' );
 
-my @methods = qw(
-    encode
-    decode
-);
+    my $crypt = $class->new( passphrase => 'test' );
+    isa_ok( $crypt, $class );
 
-can_ok( $class, $_ ) foreach @methods;
+    my @methods = qw(
+        encode
+        decode
+    );
 
-ok( exists $crypt->{_store_obj}, 'object contains _store_obj key' );
+    can_ok( $class, $_ ) foreach @methods;
+
+    ok( exists $crypt->{_store_obj}, 'object contains _store_obj key' );
+}
 
 EXCEPTIONS: {
     note( 'exceptions' );
 
-    dies_ok( sub { $crypt->new() },
+    dies_ok( sub { $class->new() },
              "dies if passphrase is not passed" );
     like $@, qr/passphrase argument is required/, "message matches expected string";
 }

@@ -8,14 +8,18 @@ use Pasteburn::Test;
 my $class = 'Pasteburn::Crypt::Hash';
 use_ok( $class );
 
-my $crypt = $class->new();
-isa_ok( $crypt, $class );
+CONSTRUCTOR: {
+    note( 'constructor' );
 
-my @methods = qw(
-    generate
-    validate
-);
+    my $crypt = $class->new();
+    isa_ok( $crypt, $class );
 
-can_ok( $class, $_ ) foreach @methods;
+    my @methods = qw(
+        generate
+        validate
+    );
+
+    can_ok( $class, $_ ) foreach @methods;
+}
 
 done_testing();

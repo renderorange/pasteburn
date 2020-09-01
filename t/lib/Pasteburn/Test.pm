@@ -51,4 +51,28 @@ sub override {
     return;
 }
 
+sub write_config {
+    my %args = (
+        config => undef,
+        @_,
+    );
+
+    require File::Temp;
+
+    my $temp_dir = File::Temp->newdir(
+        DIR => $FindBin::RealBin,
+    );
+    my $rc = "$temp_dir/.pasteburntestrc";
+
+    require Config::Tiny;
+
+    my $config_tiny = Config::Tiny->new;
+    %{$config_tiny} = %{$args{config}};
+
+    die( "unable to write config\n" )
+        unless $config_tiny->write( $rc );
+
+    return $rc;
+}
+
 1;

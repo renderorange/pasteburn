@@ -15,11 +15,11 @@ sub get {
 
     bless $self, $class;
 
-    %{$self} = %{ $self->load_config };
+    %{$self} = %{ $self->_load_config };
     return $self;
 }
 
-sub load_config {
+sub _load_config {
     my $self = shift;
 
     my $module_path = Cwd::realpath(__FILE__);
@@ -104,9 +104,7 @@ it to the caller.
 
 Load the config and return a C<Pasteburn::Config> object.
 
-=item load_config
-
-Read the config from disk, verify, then return it's content.
+Required keys and values are validated during load, and exception thrown if not defined or containing the default values.
 
 =back
 

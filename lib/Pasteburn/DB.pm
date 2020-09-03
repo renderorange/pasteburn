@@ -21,6 +21,10 @@ sub connect_db {
         }
     ) or die("connect db: $DBI::errstr\n");
 
+    if ( $ENV{DBI_DRIVER} eq 'mysql' ) {
+        $dbh->{mysql_auto_reconnect} = 1;
+    }
+
     return $dbh;
 }
 
@@ -28,6 +32,7 @@ sub load {
     my $conf = Pasteburn::Config->get();
 
     if ( $conf->{database}{type} eq 'sqlite' ) {
+        $ENV{DBI_DRIVER} = 'SQLite';
         my $module_path = Cwd::realpath(__FILE__);
         $module_path =~ s/\w+\.pm//;
         my $db = Cwd::realpath( $module_path . '/../../db/pasteburn.sqlite3' );
@@ -39,6 +44,7 @@ sub load {
         return ( "dbi:SQLite:dbname=$db", undef, undef );
     }
     elsif ( $conf->{database}{type} eq 'mysql' ) {
+        $ENV{DBI_DRIVER} = 'mysql';
         return (
             "dbi:mysql:database=" . $conf->{database}{dbname} . ";host=" . $conf->{database}{hostname} . ";port=" . $conf->{database}{port},
             $conf->{database}{username}, $conf->{database}{password}

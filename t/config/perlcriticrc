@@ -13,6 +13,9 @@ force = 1
 [Variables::ProhibitPackageVars]
 packages = DBI
 
+# don't require ENV to be set local
+[-Variables::RequireLocalizedPunctuationVars]
+
 # HEREDOC doesn't adhere to my tidy eye
 [-ValuesAndExpressions::ProhibitImplicitNewlines]
 

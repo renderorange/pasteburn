@@ -1,0 +1,3 @@
+# add to the apache vhost to proxy
+ProxyPass / http://localhost:5000/
+ProxyPassReverse / http://localhost:5000/

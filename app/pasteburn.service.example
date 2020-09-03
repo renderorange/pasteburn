@@ -1,0 +1,19 @@
+[Service]
+RuntimeDirectory=pasteburn
+
+ExecStart=/path/to/pasteburn/perl5/bin/starman --daemonize -l 127.0.0.1:5000 --pid /var/run/pasteburn/pasteburn.pid --error-log /var/log/pasteburn/starman-api.log /path/to/pasteburn/git/pasteburn/app/app.psgi
+
+Restart=always
+
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=pasteburn
+
+Type=forking
+User=pasteburn
+Group=pasteburn
+
+Environment=DANCER_CONFDIR=/path/to/pasteburn/git/pasteburn/app/ DANCER_ENVIRONMENT=production PERL5LIB=/path/to/pasteburn/perl5/lib/perl5:/path/to/pasteburn/git/pasteburn/lib:$PERL5LIB
+
+[Install]
+WantedBy=multi-user.target

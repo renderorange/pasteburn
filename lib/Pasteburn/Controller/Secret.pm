@@ -115,7 +115,7 @@ post q{/secret/:id} => sub {
         return template secret => $template_params;
     }
 
-    if ( $run_mode eq 'del' ) {
+    if ( $run_mode && $run_mode eq 'del' ) {
         my $session_secrets = session->read('secrets');
         delete $session_secrets->{ $secret_obj->id };
         session->write( 'secrets', $session_secrets );

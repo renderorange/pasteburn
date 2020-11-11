@@ -18,5 +18,5 @@ if ($@) {
 
 Test::PerlTidy::run_tests(
     path       => "$FindBin::RealBin/../lib",
-    perltidyrc => "$FindBin::RealBin/config/perltidyrc",
+    perltidyrc => "$FindBin::RealBin/../.perltidyrc",
 );

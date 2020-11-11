@@ -17,7 +17,7 @@ if ($@) {
     plan( skip_all => $msg );
 }
 
-my $rcfile = File::Spec->catfile( 't', 'config/perlcriticrc' );
+my $rcfile = File::Spec->catfile( "$FindBin::RealBin/../", '.perlcriticrc' );
 Test::Perl::Critic->import( -profile => $rcfile );
 
 all_critic_ok("$FindBin::RealBin/../lib");

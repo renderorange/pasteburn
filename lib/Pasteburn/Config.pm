@@ -10,18 +10,13 @@ use List::MoreUtils       ();
 our $VERSION = '0.001';
 
 sub get {
-    my $class = shift;
-    my $self  = {};
+    my $config = _load_config();
+    _validate($config);
 
-    bless $self, $class;
-
-    %{$self} = %{ $self->_load_config };
-    return $self;
+    return $config;
 }
 
 sub _load_config {
-    my $self = shift;
-
     my $module_path = Cwd::realpath(__FILE__);
     $module_path =~ s/\w+\.pm//;
     my $rc = Cwd::realpath( $module_path . '/../../.pasteburnrc' );
@@ -30,14 +25,10 @@ sub _load_config {
         die "$rc is not present";
     }
 
-    my $config = Config::Tiny->read($rc);
-    $self->_validate($config);
-
-    return Data::Structure::Util::unbless($config);
+    return Data::Structure::Util::unbless( Config::Tiny->read($rc) );
 }
 
 sub _validate {
-    my $self   = shift;
     my $config = shift;
 
     # verify required config sections

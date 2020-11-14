@@ -7,6 +7,8 @@ use parent 'Test::More';
 
 our $VERSION = '0.001';
 
+our $tempdir = '';
+
 sub import {
     my $class = shift;
     my %args  = @_;
@@ -59,10 +61,11 @@ sub write_config {
 
     require File::Temp;
 
-    my $temp_dir = File::Temp->newdir(
-        DIR => $FindBin::RealBin,
+    $tempdir = File::Temp->newdir(
+        DIR     => $FindBin::RealBin,
+        CLEANUP => 0,
     );
-    my $rc = "$temp_dir/.pasteburntestrc";
+    my $rc = "$tempdir/.pasteburntestrc";
 
     require Config::Tiny;
 
@@ -73,6 +76,15 @@ sub write_config {
         unless $config_tiny->write( $rc );
 
     return $rc;
+}
+
+END {
+    if ( $tempdir ) {
+        Test::More::note( "cleaning up tempdir - $tempdir" );
+        unless ( rmdir $tempdir ) {
+            Test::More::diag( "rmdir: $!\n" );
+        }
+    }
 }
 
 1;

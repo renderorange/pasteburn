@@ -5,8 +5,6 @@ use FindBin ();
 use lib "$FindBin::RealBin/../../../lib", "$FindBin::RealBin/../../lib";
 use Pasteburn::Test;
 
-use File::Temp ();
-
 my $class = 'Pasteburn::Config';
 use_ok( $class );
 
@@ -24,13 +22,7 @@ my $config_expected = {
     },
 };
 
-my $temp_dir = File::Temp->newdir(
-    DIR => $FindBin::Bin,
-);
-
-my $pasteburnrc = "$temp_dir/.pasteburnrc";
-
-write_config( $config_expected );
+my $pasteburnrc = Pasteburn::Test::write_config( config => $config_expected );
 
 Pasteburn::Test::override(
     package => 'Cwd',
@@ -55,18 +47,3 @@ EXCEPTIONS: {
 }
 
 done_testing;
-
-sub write_config {
-    my $config = shift;
-
-    my $config_tiny = Config::Tiny->new;
-
-    foreach my $key ( keys %{ $config } ) {
-        $config_tiny->{ $key } = $config->{ $key };
-    }
-
-    die( "unable to write config\n" )
-        unless $config_tiny->write( $pasteburnrc );
-
-    return;
-}

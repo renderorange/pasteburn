@@ -59,14 +59,7 @@ hook on_route_exception => sub {
     my $app       = shift;
     my $exception = shift;
 
-    my $template_params = {
-        route   => request->path,
-        message => 'Whoops, there was an error on our end',
-    };
-
     log( 'error', $exception );
-    response->{status} = HTTP::Status::HTTP_INTERNAL_SERVER_ERROR;
-    return template error => $template_params;
 };
 
 1;

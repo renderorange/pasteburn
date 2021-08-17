@@ -10,7 +10,7 @@
 <p>Secrets are encrypted using the passphrase you provide. Passphrases are hashed. The secret and passphrase in the database look like random text we can't read and can't decrypt without the passphrase.</p>
 
 <h3>I don't trust your website. How do I know you're not reading my secrets?</h3>
-<p>All of the code for this project is <a href="https://github.com/renderorange/pasteburn">open source and available to read</a>. Installation instructions [are being added soon] if you'd prefer to run this project on your own infrastructure.</p>
+<p>All of the code for this project is <a href="https://dev.adventurehound.io/renderorange/pasteburn">open source and available to read</a>. Installation instructions [are being added soon] if you'd prefer to run this project on your own infrastructure.</p>
 
 <h3>Who made this?</h3>
 <p>My name is Blaine Motsinger. Feel free to <a href="mailto:Blaine Motsinger <blaine@renderorange.com>">email me</a> if you'd like to chat.</p>

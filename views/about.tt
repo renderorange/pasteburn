@@ -18,6 +18,6 @@
 <h2>Colophon</h2>
 <h3>Technologies this project uses</h3>
 <p>Pasteburn is built in Perl using the Dancer2 framework.</p>
-<p>The UI uses the <a href="http://getskeleton.com/">Skeleton CSS boilerplate</a>. License information is available in the <a href="https://github.com/renderorange/pasteburn">Pasteburn repo</a>.</p>
+<p>The UI uses the <a href="http://getskeleton.com/">Skeleton CSS boilerplate</a>. License information is available in the <a href="https://dev.adventurehound.io/renderorange/pasteburn">Pasteburn repo</a>.</p>
 
 [% INCLUDE includes/footer.tt %]

@@ -9,16 +9,8 @@ my $class = 'Pasteburn::Config';
 use_ok( $class );
 
 my $config_expected = {
-    cookie   => {
+    cookie => {
         secret_key => 'default',
-    },
-    database => {
-        type => 'mysql',
-        hostname => '127.0.0.1',
-        port     => 3306,
-        dbname   => 'pasteburn',
-        username => 'pasteburn',
-        password => 'password',
     },
 };
 

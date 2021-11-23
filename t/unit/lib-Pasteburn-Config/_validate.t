@@ -9,16 +9,8 @@ my $class = 'Pasteburn::Config';
 use_ok( $class );
 
 my $config_expected = {
-    cookie   => {
+    cookie => {
         secret_key => 'notdefault',
-    },
-    database => {
-        type => 'mysql',
-        hostname => '127.0.0.1',
-        port     => 3306,
-        dbname   => 'pasteburn',
-        username => 'pasteburn',
-        password => 'password',
     },
 };
 
@@ -33,7 +25,7 @@ EXCEPTIONS: {
     note( 'exceptions' );
 
     subtest 'dies if missing any of the config keys' => sub {
-        plan tests => 2;
+        plan tests => 1;
 
         foreach my $required ( keys %{ $config_expected } ) {
             my $stored = delete $config_expected->{ $required };
@@ -46,7 +38,7 @@ EXCEPTIONS: {
     };
 
     subtest 'dies if missing any of the config sub keys' => sub {
-        plan tests => 7;
+        plan tests => 1;
 
         foreach my $required ( keys %{ $config_expected } ) {
             foreach my $required_sub_key ( keys %{ $config_expected->{$required} } ) {

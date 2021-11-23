@@ -2,18 +2,15 @@ package Pasteburn::DB;
 
 use strictures version => 2;
 
-use Pasteburn::Config;
-
 use Cwd ();
 use DBI;
 
 our $VERSION = '0.001';
 
 sub connect_db {
-    my ( $dsn, $user, $password ) = load();
+    my $dsn = load();
     my $dbh = DBI->connect(
-        $dsn, $user,
-        $password,
+        $dsn, undef, undef,
         {   PrintError       => 0,
             RaiseError       => 1,
             AutoCommit       => 1,
@@ -21,35 +18,19 @@ sub connect_db {
         }
     ) or die("connect db: $DBI::errstr\n");
 
-    if ( $ENV{DBI_DRIVER} eq 'mysql' ) {
-        $dbh->{mysql_auto_reconnect} = 1;
-    }
-
     return $dbh;
 }
 
 sub load {
-    my $conf = Pasteburn::Config->get();
+    my $module_path = Cwd::realpath(__FILE__);
+    $module_path =~ s/\w+\.pm//;
+    my $db = Cwd::realpath( $module_path . '/../../db/pasteburn.sqlite3' );
 
-    if ( $conf->{database}{type} eq 'sqlite' ) {
-        $ENV{DBI_DRIVER} = 'SQLite';
-        my $module_path = Cwd::realpath(__FILE__);
-        $module_path =~ s/\w+\.pm//;
-        my $db = Cwd::realpath( $module_path . '/../../db/pasteburn.sqlite3' );
-
-        unless ( -f $db ) {
-            die "$db is not readable";
-        }
-
-        return ( "dbi:SQLite:dbname=$db", undef, undef );
+    unless ( -f $db ) {
+        die "$db is not readable";
     }
-    elsif ( $conf->{database}{type} eq 'mysql' ) {
-        $ENV{DBI_DRIVER} = 'mysql';
-        return (
-            "dbi:mysql:database=" . $conf->{database}{dbname} . ";host=" . $conf->{database}{hostname} . ";port=" . $conf->{database}{port},
-            $conf->{database}{username}, $conf->{database}{password}
-        );
-    }
+
+    return "dbi:SQLite:dbname=$db";
 }
 
 1;
@@ -98,11 +79,7 @@ None.
 
 =head3 RETURNS
 
-The C<dsn>, C<user>, and C<password> strings, depending on the database type as defined in the config.
-
-=head3 CONFIGURATION
-
-C<connect_db> reads the database connection details from the C<.pasteburnrc> file, loaded through C<Pasteburn::Config>.
+The C<dsn> string.
 
 =head1 AUTHOR
 

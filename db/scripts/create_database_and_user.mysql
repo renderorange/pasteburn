@@ -1,4 +1,0 @@
-create database if not exists pasteburn;
-create user 'pasteburn'@'localhost' IDENTIFIED BY 'password';
-grant all privileges on pasteburn.* to 'pasteburn'@'localhost';
-flush privileges;

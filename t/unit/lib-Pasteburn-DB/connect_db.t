@@ -8,23 +8,6 @@ use Pasteburn::Test;
 my $class = 'Pasteburn::DB';
 use_ok( $class );
 
-my $config_expected = {
-    database => {
-        type     => 'mysql',
-        hostname => 'localhost',
-        port     => 3306,
-        dbname   => 'pasteburn',
-        username => 'pasteburn',
-        password => 'password',
-    },
-};
-
-Pasteburn::Test::override(
-    package => 'Pasteburn::Config',
-    name    => 'get',
-    subref  => sub { return $config_expected },
-);
-
 HAPPY_PATH: {
     note( 'happy path' );
 
@@ -39,7 +22,6 @@ HAPPY_PATH: {
     my $dbh = Pasteburn::DB::connect_db();
 
     isa_ok( $dbh, 'DBI::db' );
-    ok( ( exists $dbh->{mysql_auto_reconnect} && $dbh->{mysql_auto_reconnect} ), 'mysql_auto_reconnect is set in the dbh' );
 }
 
 EXCEPTIONS: {

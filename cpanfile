@@ -8,7 +8,6 @@ requires 'Dancer2::Session::Cookie';
 requires 'Data::Structure::Util';
 requires 'Digest::SHA';
 requires 'HTTP::Status';
-requires 'List::MoreUtils';
 requires 'Moo';
 requires 'MooX::ClassAttribute';
 requires 'Plack::Middleware::TrailingSlashKiller';

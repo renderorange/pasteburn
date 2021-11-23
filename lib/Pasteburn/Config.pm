@@ -5,7 +5,6 @@ use strictures version => 2;
 use Cwd                   ();
 use Config::Tiny          ();
 use Data::Structure::Util ();
-use List::MoreUtils       ();
 
 our $VERSION = '0.001';
 
@@ -32,7 +31,7 @@ sub _validate {
     my $config = shift;
 
     # verify required config sections
-    foreach my $required (qw{ cookie database }) {
+    foreach my $required (qw{ cookie }) {
         unless ( exists $config->{$required} ) {
             die "config section $required is required\n";
         }
@@ -45,23 +44,6 @@ sub _validate {
 
     if ( $config->{cookie}{secret_key} eq 'default' ) {
         die "config section cookie secret_key is the default string and must be updated\n";
-    }
-
-    # verify database type
-    unless ( exists $config->{database}{type} && defined $config->{database}{type} ) {
-        die "config section database type is required\n";
-    }
-
-    unless ( List::MoreUtils::any { $config->{database}{type} eq $_ } (qw{ sqlite mysql }) ) {
-        die "config section database type " . $config->{database}{type} . " is unknown\n";
-    }
-
-    if ( $config->{database}{type} eq 'mysql' ) {
-        foreach my $required (qw{ hostname port dbname username password }) {
-            unless ( exists $config->{database}{$required} ) {
-                die "config section database $required is required\n";
-            }
-        }
     }
 
     return 1;
@@ -104,18 +86,10 @@ Required keys and values are validated during load, and exception thrown if not 
 C<Pasteburn::Config> takes configuration options from the C<.pasteburnrc>
 file within the project directory.
 
-The C<cookie> and C<database> keys are required.
+The C<cookie> key is required.
 
  [cookie]
  secret_key = default
-
- [database]
- type = mysql
- hostname = 127.0.0.1
- port = 3306
- dbname = pasteburn
- username = pasteburn
- password = password
 
 An example config is provided as a starting point.
 

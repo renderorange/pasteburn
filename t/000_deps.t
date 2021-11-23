@@ -14,7 +14,6 @@ my @required_modules = qw{
     Data::Structure::Util
     Digest::SHA
     HTTP::Status
-    List::MoreUtils
     Moo
     MooX::ClassAttribute
     Plack::Middleware::TrailingSlashKiller

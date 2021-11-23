@@ -452,7 +452,7 @@ Available database handle.
 
 MIT License
 
-Copyright (c) 2020 Blaine Motsinger
+Copyright (c) 2021 Blaine Motsinger
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the

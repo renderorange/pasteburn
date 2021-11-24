@@ -31,7 +31,7 @@ sub _validate {
     my $config = shift;
 
     # verify required config sections
-    foreach my $required (qw{ cookie }) {
+    foreach my $required (qw{ cookie footer }) {
         unless ( exists $config->{$required} ) {
             die "config section $required is required\n";
         }
@@ -44,6 +44,11 @@ sub _validate {
 
     if ( $config->{cookie}{secret_key} eq 'default' ) {
         die "config section cookie secret_key is the default string and must be updated\n";
+    }
+
+    # verify footer links exists
+    unless ( exists $config->{footer}{links} ) {
+        die "config section footer links is required\n";
     }
 
     return 1;
@@ -86,10 +91,12 @@ Required keys and values are validated during load, and exception thrown if not 
 C<Pasteburn::Config> takes configuration options from the C<.pasteburnrc>
 file within the project directory.
 
-The C<cookie> key is required.
+The C<cookie> and C<footer> keys are required.
 
  [cookie]
  secret_key = default
+ [footer]
+ links = 1
 
 An example config is provided as a starting point.
 

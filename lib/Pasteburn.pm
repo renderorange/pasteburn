@@ -21,7 +21,8 @@ BEGIN {
         die("FATAL: session Cookie secret_key is not set");
     }
 
-    set views => config->{appdir} . 'views';
+    set views  => config->{appdir} . 'views';
+    set footer => $conf->{footer};
 
     unless ( config->{views} ) {
         die("FATAL: views is not set");
@@ -48,6 +49,7 @@ any qr{.*} => sub {
 
     my $template_params = {
         route   => request->path,
+        footer  => config->{footer},
         message => 'That resource was not found',
     };
 

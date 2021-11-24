@@ -1,5 +1,6 @@
 </div>
 </div>
+[% IF footer.links %]
 <div class="row">
     <div id="footer">
         <a href="/">home</a>
@@ -7,6 +8,7 @@
         <a href="/about">about</a>
     </div>
 </div>
+[% END %]
 </div>
 </body>
 

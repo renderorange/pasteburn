@@ -1,2 +1,4 @@
 [cookie]
 secret_key = default
+[footer]
+links = 1

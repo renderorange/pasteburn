@@ -10,6 +10,7 @@ our $VERSION = '0.001';
 get q{/secret} => sub {
     my $template_params = {
         route   => request->path,
+        footer  => config->{footer},
         message => undef,
     };
 
@@ -22,6 +23,7 @@ post q{/secret} => sub {
 
     my $template_params = {
         route        => request->path,
+        footer       => config->{footer},
         message_type => 'success',
         message      => undef,
     };
@@ -63,7 +65,11 @@ get q{/secret/:id} => sub {
     my $id       = route_parameters->get('id');
     my $run_mode = query_parameters->get('rm');
 
-    my $template_params = { message_type => 'success', message => undef, };
+    my $template_params = {
+        footer       => config->{footer},
+        message_type => 'success',
+        message      => undef,
+    };
 
     # check the db for the secret.
     my $secret_obj = Pasteburn::Model::Secrets->get( id => $id );
@@ -102,6 +108,7 @@ post q{/secret/:id} => sub {
 
     my $template_params = {
         route        => request->path,
+        footer       => config->{footer},
         message_type => 'success',
         message      => undef,
     };

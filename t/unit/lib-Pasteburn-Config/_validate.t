@@ -12,6 +12,9 @@ my $config_expected = {
     cookie => {
         secret_key => 'notdefault',
     },
+    footer => {
+        links => 1,
+    },
 };
 
 HAPPY_PATH: {
@@ -25,7 +28,7 @@ EXCEPTIONS: {
     note( 'exceptions' );
 
     subtest 'dies if missing any of the config keys' => sub {
-        plan tests => 1;
+        plan tests => 2;
 
         foreach my $required ( keys %{ $config_expected } ) {
             my $stored = delete $config_expected->{ $required };
@@ -38,7 +41,7 @@ EXCEPTIONS: {
     };
 
     subtest 'dies if missing any of the config sub keys' => sub {
-        plan tests => 1;
+        plan tests => 2;
 
         foreach my $required ( keys %{ $config_expected } ) {
             foreach my $required_sub_key ( keys %{ $config_expected->{$required} } ) {

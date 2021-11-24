@@ -30,6 +30,7 @@ h3 {
 }
 
 p {
+    line-height: 1.3em;
     margin-bottom: 1.1rem;
 }
 
@@ -99,6 +100,10 @@ div#actions input#delete:hover {
 
 div#actions form#delete_form {
     display: hidden;
+}
+
+div.section {
+    margin-bottom: 1em;
 }
 
 #footer {

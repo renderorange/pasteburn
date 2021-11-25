@@ -4,7 +4,7 @@ use Dancer2 appname => 'pasteburn';
 
 use HTTP::Status ();
 
-our $VERSION = '0.001';
+our $VERSION = '0.002';
 
 get q{/about} => sub {
     my $template_params = {

@@ -3,6 +3,8 @@ package Pasteburn::Test;
 use strict;
 use warnings;
 
+use File::Path ();
+
 use parent 'Test::More';
 
 our $VERSION = '0.001';
@@ -65,7 +67,10 @@ sub write_config {
         DIR     => $FindBin::RealBin,
         CLEANUP => 0,
     );
-    my $rc = "$tempdir/.pasteburntestrc";
+
+    my $path = "$tempdir/.config/pasteburn";
+    File::Path::make_path($path);
+    my $rc = "$path/config.ini";
 
     require Config::Tiny;
 
@@ -81,8 +86,8 @@ sub write_config {
 END {
     if ( $tempdir ) {
         Test::More::note( "cleaning up tempdir - $tempdir" );
-        unless ( rmdir $tempdir ) {
-            Test::More::diag( "rmdir: $!\n" );
+        unless ( File::Path::rmtree($tempdir) ) {
+            Test::More::diag( "rmtree: $!\n" );
         }
     }
 }

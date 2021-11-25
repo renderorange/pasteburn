@@ -2,23 +2,37 @@ package Pasteburn::Config;
 
 use strictures version => 2;
 
-use Cwd                   ();
 use Config::Tiny          ();
 use Data::Structure::Util ();
 
 our $VERSION = '0.001';
 
 sub get {
-    my $config = _load_config();
+    my $config = _load();
     _validate($config);
 
     return $config;
 }
 
-sub _load_config {
-    my $module_path = Cwd::realpath(__FILE__);
-    $module_path =~ s/\w+\.pm//;
-    my $rc = Cwd::realpath( $module_path . '/../../.pasteburnrc' );
+sub _get_conf_path {
+    my $name = 'pasteburn';
+
+    my $dir;
+    if ( $ENV{HOME} && -d "$ENV{HOME}/.config/$name" ) {
+        $dir = "$ENV{HOME}/.config";
+    }
+    elsif ( -d "/etc/$name" ) {
+        $dir = '/etc';
+    }
+    else {
+        die "error: unable to find config directory\n";
+    }
+
+    return "$dir/$name/config.ini";
+}
+
+sub _load {
+    my $rc = _get_conf_path();
 
     unless ( -f $rc ) {
         die "$rc is not present";
@@ -51,7 +65,7 @@ sub _validate {
         die "config section footer links is required\n";
     }
 
-    return 1;
+    return;
 }
 
 1;
@@ -71,8 +85,7 @@ Pasteburn::Config - load and return the project config
 
 =head1 DESCRIPTION
 
-C<Pasteburn::Config> loads the project config from the project dir location and returns
-it to the caller.
+C<Pasteburn::Config> loads the project config.
 
 =head1 METHODS
 
@@ -88,17 +101,41 @@ Required keys and values are validated during load, and exception thrown if not 
 
 =head1 CONFIGURATION
 
-C<Pasteburn::Config> takes configuration options from the C<.pasteburnrc>
-file within the project directory.
+An example configuration file, C<config.ini.example>, is provided in the project root directory.
 
-The C<cookie> and C<footer> keys are required.
+To set up the configuration file, copy the example into one of the following locations:
+
+=over
+
+=item C<$ENV{HOME}/.config/pasteburn/config.ini>
+
+=item C</etc/pasteburn/config.ini>
+
+=back
+
+After creating the file, edit and update the values accordingly.
+
+B<NOTE:> If the C<$ENV{HOME}/.config/pasteburn/> directory exists, C<config.ini> will be loaded from there regardless of a config file in C</etc/pasteburn/>.
+
+=head2 REQUIRED KEYS
+
+=over
+
+=item cookie
+
+The C<cookie> section key is required, and C<secret_key> option key within it.
 
  [cookie]
  secret_key = default
+
+=item footer
+
+The C<footer> section key is required, and C<links> option key within it.
+
  [footer]
  links = 1
 
-An example config is provided as a starting point.
+=back
 
 =head1 AUTHOR
 

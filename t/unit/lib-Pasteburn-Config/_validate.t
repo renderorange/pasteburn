@@ -10,7 +10,7 @@ use_ok( $class );
 
 my $config_expected = {
     cookie => {
-        secret_key => 'notdefault',
+        secret_key => 'testing',
     },
     footer => {
         links => 1,
@@ -21,7 +21,7 @@ HAPPY_PATH: {
     note( 'happy path' );
 
     lives_ok { Pasteburn::Config::_validate( $config_expected ) }
-        'expected keys and values all validate';
+        'lives if config is valid';
 }
 
 EXCEPTIONS: {

@@ -5,7 +5,6 @@ testing
 *.swp
 *.back
 backup/
-.pasteburnrc
 *.swp
 cover_db/
 .gitconfig

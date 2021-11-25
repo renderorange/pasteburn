@@ -9,29 +9,24 @@ my $class = 'Pasteburn::Config';
 use_ok( $class );
 
 my $config_expected = {
-    cookie   => {
-        secret_key => 'default',
+    cookie => {
+        secret_key => 'testing',
     },
-    database => {
-        type => 'mysql',
-        hostname => '127.0.0.1',
-        port     => 3306,
-        dbname   => 'pasteburn',
-        username => 'pasteburn',
-        password => 'password',
+    footer => {
+        links => 1,
     },
 };
 
 Pasteburn::Test::override(
     package => 'Pasteburn::Config',
-    name    => '_load_config',
+    name    => '_load',
     subref  => sub { return $config_expected },
 );
 
 Pasteburn::Test::override(
     package => 'Pasteburn::Config',
     name    => '_validate',
-    subref  => sub { return 1 },
+    subref  => sub { return },
 );
 
 HAPPY_PATH: {

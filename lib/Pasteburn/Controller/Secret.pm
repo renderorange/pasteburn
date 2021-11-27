@@ -56,14 +56,14 @@ post q{/secret} => sub {
     # can give different options in the secret view as the creator.
     my $session_secrets = session->read('secrets');
     $session_secrets->{ $secret_obj->id }{created_at} = $secret_obj->created_at;
+    $session_secrets->{ $secret_obj->id }{runmode}    = 'new';
     session->write( 'secrets', $session_secrets );
 
-    redirect '/secret/' . $secret_obj->id . '?rm=new';
+    redirect '/secret/' . $secret_obj->id;
 };
 
 get q{/secret/:id} => sub {
-    my $id       = route_parameters->get('id');
-    my $run_mode = query_parameters->get('rm');
+    my $id = route_parameters->get('id');
 
     my $template_params = {
         footer       => config->{footer},
@@ -91,8 +91,11 @@ get q{/secret/:id} => sub {
     # check the session to see if this user created the secret.
     my $session_secrets = session->read('secrets');
     if ( exists $session_secrets->{ $secret_obj->id } ) {
-        $template_params->{message} = 'The secret has been created'
-            if $run_mode && $run_mode eq 'new';
+        if ( $session_secrets->{ $secret_obj->id }{runmode} && $session_secrets->{ $secret_obj->id }{runmode} eq 'new' ) {
+            $template_params->{message} = 'The secret has been created';
+            delete $session_secrets->{ $secret_obj->id }{runmode};
+            session->write( 'secrets', $session_secrets );
+        }
 
         $template_params->{author} = 1;
         return template secret => $template_params;

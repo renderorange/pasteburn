@@ -55,7 +55,7 @@ post q{/secret} => sub {
     # add the secret id and created_at to the user's secure session cookie so we
     # can give different options in the secret view as the creator.
     my $session_secrets = session->read('secrets');
-    $session_secrets->{ $secret_obj->id } = $secret_obj->created_at;
+    $session_secrets->{ $secret_obj->id }{created_at} = $secret_obj->created_at;
     session->write( 'secrets', $session_secrets );
 
     redirect '/secret/' . $secret_obj->id . '?rm=new';

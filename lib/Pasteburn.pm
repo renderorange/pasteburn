@@ -35,9 +35,9 @@ hook before => sub {
     my $time            = localtime;
     my $now             = $time->epoch;
     my $session_secrets = session->read('secrets');
+
     foreach my $session_id ( keys %{$session_secrets} ) {
-        my $created_at = $session_secrets->{$session_id};
-        if ( $created_at + ( 86400 * 7 ) <= $now ) {
+        if ( $session_secrets->{$session_id}{created_at} + ( 86400 * 7 ) <= $now ) {
             delete $session_secrets->{$session_id};
         }
     }

@@ -2,8 +2,6 @@ package Pasteburn::Controller::About;
 
 use Dancer2 appname => 'pasteburn';
 
-use HTTP::Status ();
-
 our $VERSION = '0.002';
 
 get q{/about} => sub {

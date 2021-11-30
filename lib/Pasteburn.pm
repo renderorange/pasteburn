@@ -64,6 +64,20 @@ hook on_route_exception => sub {
     log( 'error', $exception );
 };
 
+sub set_session_response {
+    my $response = shift;
+    session->write( 'response', $response );
+
+    return;
+}
+
+sub get_session_response {
+    my $response = session->read('response') || qw{};
+    session->write( 'response', undef );
+
+    return $response;
+}
+
 1;
 
 __END__

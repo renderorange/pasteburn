@@ -8,11 +8,19 @@ use Pasteburn::Model::Secrets ();
 our $VERSION = '0.003';
 
 get q{/secret} => sub {
+    my $session_response = Pasteburn::get_session_response();
+
     my $template_params = {
-        route   => request->path,
-        footer  => config->{footer},
-        message => undef,
+        route        => request->path,
+        footer       => config->{footer},
+        message_type => undef,
+        message      => undef,
     };
+
+    if ($session_response) {
+        $template_params->{message_type} = $session_response->{type}    if $session_response->{type};
+        $template_params->{message}      = $session_response->{message} if $session_response->{message};
+    }
 
     return template secret => $template_params;
 };
@@ -80,10 +88,13 @@ get q{/secret/:id} => sub {
             session->write( 'secrets', $session_secrets );
         }
 
-        $template_params->{message_type} = 'error';
-        $template_params->{message}      = 'That secret does not exist or has expired';
-        response->{status} = HTTP::Status::HTTP_NOT_FOUND;
-        return template secret => $template_params;
+        Pasteburn::set_session_response(
+            {   type    => 'error',
+                message => 'That secret does not exist or has expired',
+            }
+        );
+
+        redirect '/secret';
     }
 
     $template_params->{id} = $secret_obj->id;
@@ -112,17 +123,20 @@ post q{/secret/:id} => sub {
     my $template_params = {
         route        => request->path,
         footer       => config->{footer},
-        message_type => 'success',
+        message_type => undef,
         message      => undef,
     };
 
     # check the db for the secret.
     my $secret_obj = Pasteburn::Model::Secrets->get( id => $id );
     unless ($secret_obj) {
-        $template_params->{message_type} = 'error';
-        $template_params->{message}      = 'That secret does not exist or has expired';
-        response->{status} = HTTP::Status::HTTP_NOT_FOUND;
-        return template secret => $template_params;
+        Pasteburn::set_session_response(
+            {   type    => 'error',
+                message => 'That secret does not exist or has expired',
+            }
+        );
+
+        redirect '/secret';
     }
 
     if ( $run_mode && $run_mode eq 'del' ) {
@@ -132,8 +146,13 @@ post q{/secret/:id} => sub {
 
         $secret_obj->delete_secret;
 
-        $template_params->{message} = 'The secret has been deleted';
-        return template secret => $template_params;
+        Pasteburn::set_session_response(
+            {   type    => 'success',
+                message => 'The secret has been deleted',
+            }
+        );
+
+        redirect '/secret';
     }
 
     $template_params->{id} = $secret_obj->id;
@@ -162,8 +181,9 @@ post q{/secret/:id} => sub {
 
         $secret_obj->delete_secret;
 
-        $template_params->{message} = 'The secret has been decrypted';
-        $template_params->{secret}  = $decoded_secret;
+        $template_params->{message_type} = 'success';
+        $template_params->{message}      = 'The secret has been decrypted';
+        $template_params->{secret}       = $decoded_secret;
         return template secret => $template_params;
     }
 

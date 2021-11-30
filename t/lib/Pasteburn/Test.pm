@@ -7,7 +7,7 @@ use File::Path ();
 
 use parent 'Test::More';
 
-our $VERSION = '0.004';
+our $VERSION = '0.005';
 
 our $tempdir = '';
 

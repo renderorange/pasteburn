@@ -11,7 +11,6 @@ get q{/secret} => sub {
     my $session_response = Pasteburn::get_session_response();
 
     my $template_params = {
-        route        => request->path,
         footer       => config->{footer},
         message_type => undef,
         message      => undef,
@@ -30,9 +29,8 @@ post q{/secret} => sub {
     my $passphrase = body_parameters->get('passphrase');
 
     my $template_params = {
-        route        => request->path,
         footer       => config->{footer},
-        message_type => 'success',
+        message_type => undef,
         message      => undef,
     };
 
@@ -75,7 +73,7 @@ get q{/secret/:id} => sub {
 
     my $template_params = {
         footer       => config->{footer},
-        message_type => 'success',
+        message_type => undef,
         message      => undef,
     };
 
@@ -97,7 +95,8 @@ get q{/secret/:id} => sub {
         redirect '/secret';
     }
 
-    $template_params->{id} = $secret_obj->id;
+    $template_params->{id}           = $secret_obj->id;
+    $template_params->{message_type} = 'success';
 
     # check the session to see if this user created the secret.
     my $session_secrets = session->read('secrets');
@@ -121,7 +120,6 @@ post q{/secret/:id} => sub {
     my $run_mode   = body_parameters->get('rm');
 
     my $template_params = {
-        route        => request->path,
         footer       => config->{footer},
         message_type => undef,
         message      => undef,

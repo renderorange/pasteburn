@@ -48,7 +48,6 @@ any qr{.*} => sub {
     my $app = shift;
 
     my $template_params = {
-        route   => request->path,
         footer  => config->{footer},
         message => 'That resource was not found',
     };

@@ -10,6 +10,7 @@ use Scalar::Util ();
 
 use Pasteburn::Crypt::Hash    ();
 use Pasteburn::Crypt::Storage ();
+use Crypt::Random             ();
 use Digest::SHA               ();
 
 use Moo;
@@ -158,10 +159,7 @@ sub _generate_id {
         die "_generate_id must be called as an object method";
     }
 
-    my $crypt = Pasteburn::Crypt::Hash->new();
-    my $hash  = $crypt->generate( string => rand . localtime . rand );
-
-    return Digest::SHA::sha256_hex($hash);
+    return Digest::SHA::sha256_hex( Crypt::Random::makerandom( Size => 512, Strength => 0 ) );
 }
 
 sub _update_object {

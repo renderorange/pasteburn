@@ -6,6 +6,7 @@ use Test::More;
 my @required_modules = qw{
     Config::Tiny
     Crypt::PBKDF2
+    Crypt::Random
     Cwd
     DBD::SQLite
     DBI

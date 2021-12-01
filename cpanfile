@@ -1,5 +1,6 @@
 requires 'Config::Tiny';
 requires 'Crypt::PBKDF2';
+requires 'Crypt::Random';
 requires 'Cwd';
 requires 'DBD::SQLite';
 requires 'DBI';

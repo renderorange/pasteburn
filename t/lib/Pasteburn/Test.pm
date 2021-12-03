@@ -9,7 +9,7 @@ use Try::Tiny;
 
 use parent 'Test::More';
 
-our $VERSION = '0.005';
+our $VERSION = '0.007';
 
 our ( $tempdir, $dbh );
 

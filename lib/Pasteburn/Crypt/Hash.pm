@@ -4,7 +4,7 @@ use strictures version => 2;
 
 use Crypt::PBKDF2;
 
-our $VERSION = '0.005';
+our $VERSION = '0.007';
 
 sub new {
     my $class = shift;

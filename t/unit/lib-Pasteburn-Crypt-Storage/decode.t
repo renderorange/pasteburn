@@ -3,7 +3,7 @@ use warnings;
 
 use FindBin ();
 use lib "$FindBin::RealBin/../../../lib", "$FindBin::RealBin/../../lib";
-use Pasteburn::Test;
+use Pasteburn::Test skip_db => 1;
 
 my $class = 'Pasteburn::Crypt::Storage';
 use_ok( $class );

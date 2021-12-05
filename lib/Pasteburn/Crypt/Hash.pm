@@ -2,21 +2,17 @@ package Pasteburn::Crypt::Hash;
 
 use strictures version => 2;
 
-use Crypt::PBKDF2;
+use Crypt::Random              ();
+use Crypt::Eksblowfish::Bcrypt ();
+use Digest::SHA                ();
+use Encode                     ();
 
 our $VERSION = '0.008';
 
 sub new {
     my $class = shift;
 
-    my $self = {
-        _hash_obj => Crypt::PBKDF2->new(
-            hash_class => 'HMACSHA1',
-            iterations => 1000,
-            output_len => 20,
-            salt_len   => 124,
-        ),
-    };
+    my $self = { cost => 12, };
 
     return bless $self, $class;
 }
@@ -25,6 +21,7 @@ sub generate {
     my $self = shift;
     my $arg  = {
         string => undef,
+        salt   => undef,
         @_,
     };
 
@@ -32,7 +29,30 @@ sub generate {
         die "string is required\n";
     }
 
-    return $self->{_hash_obj}->generate( $arg->{string} );
+    my $salt;
+    if ( $arg->{salt} ) {
+        $salt = Crypt::Eksblowfish::Bcrypt::de_base64( $arg->{salt} );
+    }
+    else {
+        $salt = Crypt::Random::makerandom_octet( Length => 16 );
+    }
+
+    # TODO: if we want to support the ability to upgrade cost in the future
+    # without invalidating existing secrets, add cost as an arg that can be read
+    # from the stored string.  if passed, use cost to generate the string, else
+    # use the default in the object.
+    my $hash = Crypt::Eksblowfish::Bcrypt::bcrypt_hash(
+        {   key_nul => 1,
+            cost    => $self->{cost},
+            salt    => $salt,
+        },
+        Digest::SHA::sha512( Encode::encode( 'UTF-8', $arg->{string} ) )
+    );
+
+    return join( q{!},
+        q{}, 'bcrypt',
+        sprintf( '%02d', $self->{cost} ),
+        Crypt::Eksblowfish::Bcrypt::en_base64($salt) . Crypt::Eksblowfish::Bcrypt::en_base64($hash) );
 }
 
 sub validate {
@@ -49,7 +69,10 @@ sub validate {
         }
     }
 
-    return $self->{_hash_obj}->validate( $arg->{hash}, $arg->{string} );
+    my ( undef, $method, @parts ) = split /!/, $arg->{hash};
+    my $salt = substr( $parts[1], 0, 22 );
+
+    return $self->generate( string => $arg->{string}, salt => $salt ) eq $arg->{hash};
 }
 
 1;
@@ -96,6 +119,12 @@ Method to generate hashed strings.
 =item string
 
 The plain text string for hashing.
+
+=item salt
+
+The salt to use for hashing the string.
+
+The C<validate> method passes the salt into generate to validate the string.
 
 =back
 

@@ -5,6 +5,8 @@ use FindBin ();
 use lib "$FindBin::RealBin/../../../lib", "$FindBin::RealBin/../../lib";
 use Pasteburn::Test skip_db => 1;
 
+use Crypt::Random ();
+
 my $class = 'Pasteburn::Crypt::Hash';
 use_ok( $class );
 
@@ -16,17 +18,20 @@ HAPPY_PATH: {
 
     ok( $hash, 'return is truthy' );
 
-    subtest "returned string is RFC2307 compatible" => sub {
+    subtest 'returned string contains expected parts' => sub {
         plan tests => 4;
 
-        my @parts = split( ':', $hash );
+        my @parts = split( '!', $hash );
 
-        is( $parts[0], '{X-PBKDF2}HMACSHA1', 'string contains scheme (X-PBKDF2) and hash class (HMACSHA1)' );
-        is( $parts[1], 'AAAD6A', 'string contains interations (encoded 1000 - AAAD6A)' );
-        ok( $parts[2], 'string contains salt' );
-        ok( $parts[3], 'string contains key' );
+        ok( !$parts[0], 'NUL is appended' );
+        is( $parts[1], 'bcrypt', 'method is bcrypt' );
+        is( $parts[2], $crypt->{cost}, 'string contains expected cost' );
+        ok( $parts[3], 'string contains salt/encrypted string' );
     };
+}
 
+GENERATE_WITH_SALT: {
+    note( 'NOTE: generate with salt is implicitly tested through validate' );
 }
 
 EXCEPTIONS: {

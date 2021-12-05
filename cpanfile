@@ -1,5 +1,5 @@
 requires 'Config::Tiny';
-requires 'Crypt::PBKDF2';
+requires 'Crypt::Eksblowfish::Bcrypt';
 requires 'Crypt::Random';
 requires 'Cwd';
 requires 'DBD::SQLite';
@@ -8,6 +8,7 @@ requires 'Dancer2';
 requires 'Dancer2::Session::Cookie';
 requires 'Data::Structure::Util';
 requires 'Digest::SHA';
+requires 'Encode';
 requires 'HTTP::Status';
 requires 'Moo';
 requires 'MooX::ClassAttribute';

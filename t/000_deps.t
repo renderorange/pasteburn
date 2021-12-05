@@ -5,7 +5,7 @@ use Test::More;
 
 my @required_modules = qw{
     Config::Tiny
-    Crypt::PBKDF2
+    Crypt::Eksblowfish::Bcrypt
     Crypt::Random
     Cwd
     DBD::SQLite
@@ -14,6 +14,7 @@ my @required_modules = qw{
     Dancer2::Session::Cookie
     Data::Structure::Util
     Digest::SHA
+    Encode
     HTTP::Status
     Moo
     MooX::ClassAttribute

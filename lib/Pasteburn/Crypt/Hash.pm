@@ -72,6 +72,7 @@ sub validate {
     my ( undef, $method, @parts ) = split /!/, $arg->{hash};
     my $salt = substr( $parts[1], 0, 22 );
 
+    # TODO: do constant time comparison to avoid timing attacks
     return $self->generate( string => $arg->{string}, salt => $salt ) eq $arg->{hash};
 }
 

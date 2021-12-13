@@ -10,6 +10,10 @@
 </div>
 [% END %]
 </div>
+[% IF path == 'secret/id' %]
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script>
+<script src="/js/copy.js"></script>
+[% END %]
 </body>
 
 </html>

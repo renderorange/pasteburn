@@ -143,6 +143,8 @@ Pasteburn is Copyright (c) 2021 Blaine Motsinger under the MIT license.
 
 Skeleton CSS is Copyright (c) 2011-2014 Dave Gamache under the MIT license.
 
+clipboard.js is Copyright (c) 2021 Zeno Rocha under the MIT license.
+
 =head1 AUTHOR
 
 Blaine Motsinger C<blaine@renderorange.com>

@@ -17,7 +17,7 @@ use Moo;
 use MooX::ClassAttribute;
 use namespace::clean;
 
-our $VERSION = '0.009';
+our $VERSION = '0.010';
 
 has id => (
     is  => 'rwp',

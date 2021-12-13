@@ -2,7 +2,7 @@ package Pasteburn::Controller::About;
 
 use Dancer2 appname => 'pasteburn';
 
-our $VERSION = '0.009';
+our $VERSION = '0.010';
 
 get q{/about} => sub {
     my $template_params = { footer => config->{footer} };

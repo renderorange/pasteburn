@@ -5,7 +5,7 @@ use strictures version => 2;
 use Cwd ();
 use DBI;
 
-our $VERSION = '0.009';
+our $VERSION = '0.010';
 
 sub connect_db {
     my $dsn = load();

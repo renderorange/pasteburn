@@ -5,7 +5,7 @@ use strictures version => 2;
 use Session::Storage::Secure ();
 use Time::Piece;
 
-our $VERSION = '0.011';
+our $VERSION = '0.012';
 
 sub new {
     my $class = shift;

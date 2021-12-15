@@ -7,7 +7,7 @@ use Crypt::Eksblowfish::Bcrypt ();
 use Digest::SHA                ();
 use Encode                     ();
 
-our $VERSION = '0.012';
+our $VERSION = '0.013';
 
 sub new {
     my $class = shift;

@@ -1,3 +1,5 @@
+[secret]
+age = 604800
 [cookie]
 secret_key = default
 [footer]

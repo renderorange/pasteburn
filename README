@@ -36,6 +36,13 @@ CONFIGURATION
     "/etc/pasteburn/".
 
   REQUIRED KEYS
+    secret
+        The "secret" section key is required, and "age" option key within
+        it.
+
+         [secret]
+         age = 604800
+
     cookie
         The "cookie" section key is required, and "secret_key" option key
         within it.

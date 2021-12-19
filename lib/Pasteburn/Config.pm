@@ -45,10 +45,19 @@ sub _validate {
     my $config = shift;
 
     # verify required config sections
-    foreach my $required (qw{ cookie footer }) {
+    foreach my $required (qw{ secret cookie footer }) {
         unless ( exists $config->{$required} ) {
             die "config section $required is required\n";
         }
+    }
+
+    # verify secret age exists and is a positive value
+    unless ( exists $config->{secret}{age} ) {
+        die "config section secret age is required\n";
+    }
+
+    if ( $config->{secret}{age} < 1 ) {
+        die "config section secret age must be a positive integer\n";
     }
 
     # verify cookie secret_key is set and isn't the default string in the example config
@@ -120,6 +129,13 @@ B<NOTE:> If the C<$ENV{HOME}/.config/pasteburn/> directory exists, C<config.ini>
 =head2 REQUIRED KEYS
 
 =over
+
+=item secret
+
+The C<secret> section key is required, and C<age> option key within it.
+
+ [secret]
+ age = 604800
 
 =item cookie
 

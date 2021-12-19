@@ -9,6 +9,9 @@ my $class = 'Pasteburn::Config';
 use_ok( $class );
 
 my $config_expected = {
+    secret => {
+        age => 1,
+    },
     cookie => {
         secret_key => 'testing',
     },
@@ -28,7 +31,7 @@ EXCEPTIONS: {
     note( 'exceptions' );
 
     subtest 'dies if missing any of the config keys' => sub {
-        plan tests => 2;
+        plan tests => 3;
 
         foreach my $required ( keys %{ $config_expected } ) {
             my $stored = delete $config_expected->{ $required };
@@ -41,7 +44,7 @@ EXCEPTIONS: {
     };
 
     subtest 'dies if missing any of the config sub keys' => sub {
-        plan tests => 2;
+        plan tests => 3;
 
         foreach my $required ( keys %{ $config_expected } ) {
             foreach my $required_sub_key ( keys %{ $config_expected->{$required} } ) {
@@ -52,6 +55,19 @@ EXCEPTIONS: {
 
                 $config_expected->{$required}{$required_sub_key} = $stored;
             }
+        }
+    };
+
+    subtest 'dies if secret age key does not validate value' => sub {
+        plan tests => 2;
+
+        my $secret_age = $config_expected->{secret}{age};
+        foreach my $value ( qw{ 0 -1 } ) {
+            $config_expected->{secret}{age} = $value;
+            dies_ok { Pasteburn::Config::_validate( $config_expected ) }
+                "dies if secret age is $value";
+
+            $config_expected->{secret}{age} = $secret_age;
         }
     };
 }

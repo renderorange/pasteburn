@@ -37,7 +37,8 @@ hook before => sub {
     my $session_secrets = session->read('secrets');
 
     foreach my $session_id ( keys %{$session_secrets} ) {
-        if ( $session_secrets->{$session_id}{created_at} + ( 86400 * 7 ) <= $now ) {
+        my $secret_obj = Pasteburn::Model::Secrets->get( id => $session_id );
+        unless ($secret_obj) {
             delete $session_secrets->{$session_id};
         }
     }

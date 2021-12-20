@@ -5,7 +5,7 @@ use Dancer2 appname => 'pasteburn';
 use HTTP::Status              ();
 use Pasteburn::Model::Secrets ();
 
-our $VERSION = '0.013';
+our $VERSION = '0.014';
 
 get q{/secret} => sub {
     my $session_response = Pasteburn::get_session_response();

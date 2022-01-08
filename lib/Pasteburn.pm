@@ -2,7 +2,6 @@ package Pasteburn;
 
 use Dancer2 appname => 'pasteburn';
 
-use Time::Piece;
 use HTTP::Status ();
 
 use Pasteburn::Controller::Root   ();
@@ -32,8 +31,6 @@ BEGIN {
 hook before => sub {
     my $app = shift;
 
-    my $time            = localtime;
-    my $now             = $time->epoch;
     my $session_secrets = session->read('secrets');
 
     foreach my $session_id ( keys %{$session_secrets} ) {

@@ -2,6 +2,7 @@ package Pasteburn::Crypt::Storage;
 
 use strictures version => 2;
 
+use Encode                   ();
 use Session::Storage::Secure ();
 use Time::Piece;
 
@@ -18,7 +19,7 @@ sub new {
         die "passphrase argument is required\n";
     }
 
-    my $self = { _store_obj => Session::Storage::Secure->new( secret_key => $arg->{passphrase} ), };
+    my $self = { _store_obj => Session::Storage::Secure->new( secret_key => ( Encode::encode( 'UTF-8', $arg->{passphrase} ) ) ) };
 
     return bless $self, $class;
 }

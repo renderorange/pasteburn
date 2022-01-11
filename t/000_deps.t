@@ -29,7 +29,7 @@ my @required_modules = qw{
 };
 
 foreach ( @required_modules ) {
-    use_ok($_) or BAIL_OUT("required module $_ cannot be loaded");
+    require_ok($_) or BAIL_OUT("required module $_ cannot be loaded");
 };
 
 done_testing;

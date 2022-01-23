@@ -95,7 +95,7 @@ Secrets can't be read without the passphrase and can't be restored once they're 
 
 Secrets can only be decrypted one time and are deleted when decrypted. Secrets are automatically deleted if not viewed within 7 days.
 
-Pasteburn is built using the L<Dancer2 web framework|https://metacpan.org/pod/Dancer2> and L<Skeleton CSS boilerplate|https://github.com/dhg/Skeleton>.
+Pasteburn is built using the L<Dancer2 web framework|https://metacpan.org/pod/Dancer2>, L<Skeleton CSS boilerplate|https://github.com/dhg/Skeleton>, and L<clipboard.js JS library|https://clipboardjs.com>.
 
 =head1 CONFIGURATION
 
@@ -137,11 +137,11 @@ The C<footer> section key is required, and C<links> option key within it.
 
 =head1 COPYRIGHT AND LICENSE
 
-Pasteburn is Copyright (c) 2021 Blaine Motsinger under the MIT license.
+Pasteburn is Copyright (c) 2022 Blaine Motsinger under the MIT license.
 
 Skeleton CSS is Copyright (c) 2011-2014 Dave Gamache under the MIT license.
 
-clipboard.js is Copyright (c) 2021 Zeno Rocha under the MIT license.
+clipboard.js is Copyright (c) Zeno Rocha under the MIT license.
 
 =head1 AUTHOR
 

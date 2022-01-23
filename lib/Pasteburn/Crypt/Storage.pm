@@ -6,7 +6,7 @@ use Encode                   ();
 use Session::Storage::Secure ();
 use Time::Piece;
 
-our $VERSION = '0.015';
+our $VERSION = '0.016';
 
 sub new {
     my $class = shift;

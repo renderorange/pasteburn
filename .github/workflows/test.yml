@@ -1,0 +1,23 @@
+name: Run tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install system dependencies
+        run:
+          sudo apt-get install cpanminus sqlite3
+      - name: Install perl application dependencies
+        run:
+          sudo cpanm -n Config::Tiny Crypt::Eksblowfish::Bcrypt Crypt::Random Cwd DBD::SQLite DBI Dancer2 Dancer2::Session::Cookie Data::Structure::Util Digest::SHA Encode HTTP::Status Moo MooX::ClassAttribute Plack::Middleware::TrailingSlashKiller Scalar::Util Session::Storage::Secure Template::Toolkit Time::Piece Try::Tiny namespace::clean strictures
+      - name: Install perl test dependencies
+        run:
+          sudo cpanm -n Test::More Test::Warnings Test::Exception Test::Deep File::Temp File::Path
+      - name: Check out branch
+        uses: actions/checkout@v2
+      - name: Run tests
+        run: prove -wmlrv t

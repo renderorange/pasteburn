@@ -12,11 +12,14 @@ jobs:
         run:
           sudo apt-get install cpanminus sqlite3
       - name: Install perl application dependencies
-        run:
-          sudo cpanm -n Config::Tiny Crypt::Eksblowfish::Bcrypt Crypt::Random Cwd DBD::SQLite DBI Dancer2 Dancer2::Session::Cookie Data::Structure::Util Digest::SHA Encode HTTP::Status Moo MooX::ClassAttribute Plack::Middleware::TrailingSlashKiller Scalar::Util Session::Storage::Secure Template::Toolkit Time::Piece Try::Tiny namespace::clean strictures
+        run: |
+          sudo apt-get -y install libconfig-tiny-perl libdbi-perl libdancer2-perl libdata-structure-util-perl libdigest-sha-perl libencode-perl libmoo-perl libsession-storage-secure-perl libtime-piece-perl libtry-tiny-perl libnamespace-clean-perl libstrictures-perl
+          sudo cpanm -n Crypt::Eksblowfish::Bcrypt Crypt::Random Cwd DBD::SQLite Dancer2::Session::Cookie HTTP::Status MooX::ClassAttribute Plack::Middleware::TrailingSlashKiller Scalar::Util Template::Toolkit
       - name: Install perl test dependencies
-        run:
-          sudo cpanm -n Test::More Test::PerlTidy Test::Perl::Critic Test::Pod File::Spec
+        run: |
+          # Test::More and File::Spec are provided by perl-modules-*
+          sudo apt-get -y install libtest-perl-critic-perl libtest-pod-perl
+          sudo cpanm -n Test::PerlTidy
       - name: Check out branch
         uses: actions/checkout@v2
       - name: Run tests

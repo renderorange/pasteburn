@@ -11,15 +11,23 @@ jobs:
       - name: Install system dependencies
         run:
           sudo apt-get install cpanminus sqlite3
-      - name: Install perl application dependencies
+      - name: Install perl dependencies
         run: |
           sudo apt-get -y install libconfig-tiny-perl libdbi-perl libdancer2-perl libdata-structure-util-perl libdigest-sha-perl libencode-perl libmoo-perl libsession-storage-secure-perl libtime-piece-perl libtry-tiny-perl libnamespace-clean-perl libstrictures-perl
           sudo cpanm -n Crypt::Eksblowfish::Bcrypt Crypt::Random Cwd DBD::SQLite Dancer2::Session::Cookie HTTP::Status MooX::ClassAttribute Plack::Middleware::TrailingSlashKiller Scalar::Util Template::Toolkit
       - name: Install perl test dependencies
-        run:
-          # Test::More is provided by perl-modules-*
-          sudo apt-get -y install libtest-warnings-perl libtest-exception-perl libtest-deep-perl libfile-temp-perl libfile-path-perl
+        run: |
+          # Test::More and File::Spec are provided by perl-modules-*
+          sudo apt-get -y install libtest-warnings-perl libtest-exception-perl libtest-deep-perl libfile-temp-perl libfile-path-perl libtest-perl-critic-perl libtest-pod-perl
+          sudo cpanm -n Test::PerlTidy
       - name: Check out branch
         uses: actions/checkout@v2
-      - name: Run tests
-        run: prove -wmlrv t
+      - name: Run lint tests
+        env:
+          TEST_AUTHOR: 1
+        run:
+          prove -wmlv t/996_perl-tidy.t t/997_perl-critic.t t/998_pod-checker.t
+      - name: Run integration tests
+        run: prove -wmlrv t/integration
+      - name: Run unit tests
+        run: prove -wmlrv t/unit

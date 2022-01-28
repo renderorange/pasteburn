@@ -26,7 +26,7 @@ jobs:
         env:
           TEST_AUTHOR: 1
         run:
-          prove -wmlv t/996_perl-tidy.t t/997_perl-critic.t t/998_pod-checker.t
+          prove -wmlv t
       - name: Run integration tests
         run: prove -wmlrv t/integration
       - name: Run unit tests

@@ -134,6 +134,14 @@ post q{/secret/:id} => sub {
         redirect '/secret';
     }
 
+    if ( $run_mode && $run_mode eq 'view' ) {
+        my $session_secrets = session->read('secrets');
+        delete $session_secrets->{ $secret_obj->id };
+        session->write( 'secrets', $session_secrets );
+
+        redirect '/secret/' . $secret_obj->id;
+    }
+
     if ( $run_mode && $run_mode eq 'del' ) {
         my $session_secrets = session->read('secrets');
         delete $session_secrets->{ $secret_obj->id };

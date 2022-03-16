@@ -85,6 +85,14 @@ div#actions a.button.half-width {
     margin-right: 0.25rem;
 }
 
+div#actions input#view {
+    width: 99%;
+}
+
+div#actions form#view_form {
+    display: hidden;
+}
+
 div#actions input#delete {
     width: 99%;
     border-color: rgba(158,28,35,.2);

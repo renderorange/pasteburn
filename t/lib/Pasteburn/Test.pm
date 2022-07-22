@@ -124,6 +124,20 @@ sub init_db {
         die "insert schema failed: $_\n";
     };
 
+    # NOTE: the initdb process doesn't appear to create the index.
+    # my guess is that the do statement doesn't handle more than one statement in the query,
+    # and since the schema file has both the CREATE TABLE and CREATE UNIQUE INDEX statements,
+    # only the first one is executed.
+    # until this is solved, just add the index within it's own statement.
+    my $create_index_query = 'CREATE UNIQUE INDEX idx_secrets_id ON secrets (id)';
+
+    $result = try {
+        return $dbh->do( $create_index_query );
+    }
+    catch {
+        die "insert index failed: $_\n";
+    };
+
     return;
 }
 

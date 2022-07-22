@@ -5,7 +5,7 @@ use strictures version => 2;
 use Config::Tiny          ();
 use Data::Structure::Util ();
 
-our $VERSION = '0.017';
+our $VERSION = '0.018';
 
 sub get {
     my $config = _load();

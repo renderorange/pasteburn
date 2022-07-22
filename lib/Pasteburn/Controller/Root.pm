@@ -2,7 +2,7 @@ package Pasteburn::Controller::Root;
 
 use Dancer2 appname => 'pasteburn';
 
-our $VERSION = '0.017';
+our $VERSION = '0.018';
 
 get q{/} => sub {
     redirect '/secret';

@@ -8,7 +8,7 @@ use Pasteburn::Controller::Root   ();
 use Pasteburn::Controller::Secret ();
 use Pasteburn::Controller::About  ();
 
-our $VERSION = '0.017';
+our $VERSION = '0.018';
 
 BEGIN {
     require Pasteburn::Config;

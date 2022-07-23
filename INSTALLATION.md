@@ -12,9 +12,21 @@ These instructions walk through a basic installation of the Pasteburn applicatio
     git clone https://github.com/renderorange/pasteburn.git
     cd pasteburn
 
+## INSTALL THE SYSTEM DEPENDENCIES
+
+(these instructions assume running on Debian or Ubuntu)
+
+    apt-get install cpanminus sqlite3
+
 ## INSTALL THE PERL DEPENDENCIES
 
+(again, Debian or Ubuntu)
+
 The Perl dependencies for this project are listed in the `cpanfile` within the repo.
+
+    apt-get -y install libconfig-tiny-perl libdbi-perl libdancer2-perl libdata-structure-util-perl libdigest-sha-perl libencode-perl libmoo-perl libsession-storage-secure-perl libtime-piece-perl libtry-tiny-perl libnamespace-clean-perl libstrictures-perl
+
+    cpanm -n Crypt::Eksblowfish::Bcrypt Crypt::Random Cwd DBD::SQLite Dancer2::Session::Cookie HTTP::Status MooX::ClassAttribute Plack::Middleware::TrailingSlashKiller Scalar::Util Template::Toolkit
 
 ## CREATE THE DATABASE
 
@@ -68,7 +80,12 @@ The `app/pasteburn.service.example` file within the repo contains an example `sy
 
 Create the log file directories on the system, edit the paths and identifiers within the example file, then install and enable through systemd.
 
-The `app/apache.conf.example` file also contains example `ProxyPass` settings for running through Apache2.
+Once installed, enable and start the service.
+
+    systemctl enable pasteburn
+    systemctl start pasteburn
+
+It's recommended to run Pasteburn proxy behind a frontend webserver.  The `app/apache.conf.example` file contains example `ProxyPass` settings for running behind Apache2.
 
 ## AUTOMATICALLY DELETE OLD SECRETS
 

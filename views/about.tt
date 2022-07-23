@@ -19,7 +19,7 @@
 
 <div class="section">
 <h3>I don't trust your website. How do I know you're not storing my passphrases?</h3>
-<p>All of the code for this project is <a href="https://github.com/renderorange/pasteburn">open source and available to read</a>. Installation instructions will soon be added if you'd prefer to run this project on your own infrastructure.</p>
+<p>All of the code for this project is <a href="https://github.com/renderorange/pasteburn">open source and available to read</a>. If you'd prefer to run this project on your own infrastructure, installation instructions can be found in the <a href="https://github.com/renderorange/pasteburn/blob/master/INSTALLATION.md">Pasteburn repo</a>.</p>
 </div>
 
 <div class="section">

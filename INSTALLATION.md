@@ -69,3 +69,9 @@ The `app/pasteburn.service.example` file within the repo contains an example `sy
 Create the log file directories on the system, edit the paths and identifiers within the example file, then install and enable through systemd.
 
 The `app/apache.conf.example` file also contains example `ProxyPass` settings for running through Apache2.
+
+## AUTOMATICALLY DELETE OLD SECRETS
+
+To automatically delete old secrets after 7 days, create a cronjob to run the `bin/delete_expired_secrets.pl` script every minute.
+
+    * * * * * export PERL5LIB=/opt/pasteburn/lib:$PERL5LIB; cd /opt/pasteburn/ && perl bin/delete_expired_secrets.pl

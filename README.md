@@ -14,34 +14,9 @@ Secrets can only be decrypted one time and are deleted when decrypted. Secrets a
 
 Pasteburn is built using the [Dancer2 web framework](https://metacpan.org/pod/Dancer2), [Skeleton CSS boilerplate](https://github.com/dhg/Skeleton), and [clipboard.js JS library](https://clipboardjs.com).
 
-# CONFIGURATION
+# INSTALLATION
 
-An example configuration file, `config.ini.example`, is provided in the project root directory.
-
-To set up the configuration file, copy the example into one of the following locations:
-
-- `$ENV{HOME}/.config/pasteburn/config.ini`
-- `/etc/pasteburn/config.ini`
-
-After creating the file, edit and update the values accordingly.
-
-**NOTE:** If the `$ENV{HOME}/.config/pasteburn/` directory exists, `config.ini` will be loaded from there regardless of a config file in `/etc/pasteburn/`.
-
-## REQUIRED KEYS
-
-- cookie
-
-    The `cookie` section key is required, and `secret_key` option key within it.
-
-        [cookie]
-        secret_key = default
-
-- footer
-
-    The `footer` section key is required, and `links` option key within it.
-
-        [footer]
-        links = 1
+See the [INSTALLATION.md](INSTALLATION.md) file within this repo for instructions.
 
 # COPYRIGHT AND LICENSE
 

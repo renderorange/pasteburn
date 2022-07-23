@@ -45,12 +45,16 @@ After creating the file, edit and update the values accordingly.
         [cookie]
         secret_key = default
 
+    Set the `secret_key` value to a complex random string for your installation.
+
 - footer
 
     The `footer` section key is required, and `links` option key within it.
 
         [footer]
         links = 1
+
+    To disable the links in the footer, set the `links` value to `0`.
 
 ## RUN THE DEVELOPMENT SERVER TO TEST
 

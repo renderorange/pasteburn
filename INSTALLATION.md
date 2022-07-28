@@ -50,6 +50,15 @@ After creating the file, edit and update the values accordingly.
 
 ### REQUIRED KEYS
 
+- secret
+
+    The `secret` section key is required, and `age` option key within it.
+
+        [secret]
+        age = 604800
+
+    To change the default time to expire secrets, change the `age` value.  The value must be a positive integer.  The `age` value is only enforced if running the `delete_expired_secrets.pl` script, as noted below.
+
 - cookie
 
     The `cookie` section key is required, and `secret_key` option key within it.

@@ -9,6 +9,12 @@ my $class = 'Pasteburn::Config';
 use_ok( $class );
 
 my $config_expected = {
+    secret => {
+        age => 1,
+    },
+    passphrase => {
+        allow_blank => 0,
+    },
     cookie => {
         secret_key => 'testing',
     },

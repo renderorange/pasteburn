@@ -20,6 +20,18 @@ HAPPY_PATH: {
     ok( !$crypt->validate( hash => $hash, string => 'fooz' ), 'string validates as false' );
 }
 
+VALIDATE_WITH_EMPTY_STRING: {
+    note( 'validate with empty string' );
+
+    my $string = '';
+
+    my $crypt = $class->new();
+    my $hash = $crypt->generate( string => $string );
+
+    ok( $crypt->validate( hash => $hash, string => $string ), 'string validates as true' );
+    ok( !$crypt->validate( hash => $hash, string => 'fooz' ), 'string validates as false' );
+}
+
 EXCEPTIONS: {
     note( 'exceptions' );
 

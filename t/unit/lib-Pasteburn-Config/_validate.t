@@ -12,6 +12,9 @@ my $config_expected = {
     secret => {
         age => 1,
     },
+    passphrase => {
+        allow_blank => 0,
+    },
     cookie => {
         secret_key => 'testing',
     },
@@ -31,7 +34,7 @@ EXCEPTIONS: {
     note( 'exceptions' );
 
     subtest 'dies if missing any of the config keys' => sub {
-        plan tests => 3;
+        plan tests => 4;
 
         foreach my $required ( keys %{ $config_expected } ) {
             my $stored = delete $config_expected->{ $required };
@@ -44,7 +47,7 @@ EXCEPTIONS: {
     };
 
     subtest 'dies if missing any of the config sub keys' => sub {
-        plan tests => 3;
+        plan tests => 4;
 
         foreach my $required ( keys %{ $config_expected } ) {
             foreach my $required_sub_key ( keys %{ $config_expected->{$required} } ) {

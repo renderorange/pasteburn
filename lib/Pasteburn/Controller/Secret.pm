@@ -34,11 +34,21 @@ post q{/secret} => sub {
         message      => undef,
     };
 
-    unless ( $secret && $passphrase ) {
-        $template_params->{message_type} = 'error';
-        $template_params->{message}      = 'The secret and passphrase parameters are required';
-        response->{status} = HTTP::Status::HTTP_BAD_REQUEST;
-        return template secret => $template_params;
+    if ( config->{passphrase}{allow_blank} ) {
+        unless ($secret) {
+            $template_params->{message_type} = 'error';
+            $template_params->{message}      = 'The secret parameter is required';
+            response->{status} = HTTP::Status::HTTP_BAD_REQUEST;
+            return template secret => $template_params;
+        }
+    }
+    else {
+        unless ( $secret && $passphrase ) {
+            $template_params->{message_type} = 'error';
+            $template_params->{message}      = 'The secret and passphrase parameters are required';
+            response->{status} = HTTP::Status::HTTP_BAD_REQUEST;
+            return template secret => $template_params;
+        }
     }
 
     if ( length $secret > 10000 ) {
@@ -160,7 +170,7 @@ post q{/secret/:id} => sub {
 
     $template_params->{id} = $secret_obj->id;
 
-    unless ($passphrase) {
+    if ( !config->{passphrase}{allow_blank} && !$passphrase ) {
         $template_params->{message_type} = 'error';
         $template_params->{message}      = 'The passphrase parameter is required';
         response->{status} = HTTP::Status::HTTP_BAD_REQUEST;

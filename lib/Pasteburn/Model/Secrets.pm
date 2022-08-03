@@ -201,11 +201,15 @@ sub validate_passphrase {
         die "validate_passphrase cannot be run for a nonexistent secret";
     }
 
-    unless ( $arg->{passphrase} ) {
+    unless ( defined $arg->{passphrase} ) {
         die "passphrase is required";
     }
 
-    # this should never happen, but leaving it here just in case.
+    # if the secret is stored with an empty string as passphrase, there is still
+    # a hashed passphrase stored in the object and db.
+    # the code up to this point will allow empty string submitted from the interface,
+    # but not allow an undef to be stored.
+    # although unlikely to fail, still verify the hashed passphrase is in the object.
     unless ( defined $self->passphrase ) {
         die "passphrase is not set";
     }
@@ -229,7 +233,7 @@ sub decode_secret {
         die "decode_secret cannot be run for a nonexistent secret";
     }
 
-    unless ( $arg->{passphrase} ) {
+    unless ( defined $arg->{passphrase} ) {
         die "passphrase is required";
     }
 

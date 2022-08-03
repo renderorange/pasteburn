@@ -15,7 +15,7 @@ sub new {
         @_,
     };
 
-    unless ( $arg->{passphrase} ) {
+    unless ( defined $arg->{passphrase} ) {
         die "passphrase argument is required\n";
     }
 

@@ -25,7 +25,7 @@ sub generate {
         @_,
     };
 
-    unless ( $arg->{string} ) {
+    unless ( defined $arg->{string} ) {
         die "string is required\n";
     }
 
@@ -63,10 +63,12 @@ sub validate {
         @_,
     };
 
-    foreach my $required ( keys %{$arg} ) {
-        unless ( $arg->{$required} ) {
-            die "$required is required\n";
-        }
+    unless ( $arg->{hash} ) {
+        die "hash is required\n";
+    }
+
+    unless ( defined $arg->{string} ) {
+        die "string is required\n";
     }
 
     my ( undef, $method, @parts ) = split /!/, $arg->{hash};

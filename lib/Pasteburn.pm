@@ -20,6 +20,8 @@ BEGIN {
         die("FATAL: session Cookie secret_key is not set");
     }
 
+    set passphrase => $conf->{passphrase};
+
     set views  => config->{appdir} . 'views';
     set footer => $conf->{footer};
 
@@ -119,6 +121,24 @@ B<NOTE:> If the C<$ENV{HOME}/.config/pasteburn/> directory exists, C<config.ini>
 
 =over
 
+=item secret
+
+The C<secret> section key is required, and C<age> option key within it.
+
+ [secret]
+ age = 604800
+
+To change the default time to expire secrets, change the C<age> value.  The value must be a positive integer.  The C<age> value is only enforced if running the C<delete_expired_secrets.pl> script, as noted below.
+
+=item passphrase
+
+The C<passphrase> section key is required, and the C<allow_blank> option key within it.
+
+ [passphrase]
+ allow_blank = 0
+
+The allow users to set a blank passphrase, change C<allow_blank> to C<1>.
+
 =item cookie
 
 The C<cookie> section key is required, and C<secret_key> option key within it.
@@ -126,12 +146,16 @@ The C<cookie> section key is required, and C<secret_key> option key within it.
  [cookie]
  secret_key = default
 
+Set the C<secret_key> value to a complex random string for your installation.
+
 =item footer
 
 The C<footer> section key is required, and C<links> option key within it.
 
  [footer]
  links = 1
+
+To disable the links in the footer, set the C<links> value to C<0>.
 
 =back
 

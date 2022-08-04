@@ -19,7 +19,7 @@ jobs:
         run: |
           # Test::More and File::Spec are provided by perl-modules-*
           sudo apt-get -y install libtest-warnings-perl libtest-exception-perl libtest-deep-perl libfile-temp-perl libfile-path-perl libtest-perl-critic-perl libtest-pod-perl
-          sudo cpanm -n Test::PerlTidy
+          sudo cpanm -n Test::PerlTidy Plack::Test
       - name: Check out branch
         uses: actions/checkout@v2
       - name: Run lint tests

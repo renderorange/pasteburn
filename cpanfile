@@ -27,3 +27,4 @@ test_requires 'Test::Exception';
 test_requires 'Test::Deep';
 test_requires 'File::Temp';
 test_requires 'File::Path';
+test_requires 'Plack::Test';

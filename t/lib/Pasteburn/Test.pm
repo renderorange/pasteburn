@@ -141,6 +141,41 @@ sub init_db {
     return;
 }
 
+sub create_test_app {
+    my %args = (
+        config => undef,
+        @_,
+    );
+
+    foreach my $required ( keys %args ) {
+        unless ( defined $args{$required} ) {
+            die "$required is required";
+        }
+    }
+
+    unless ( ref $args{config} eq 'HASH' ) {
+        die "config must be a hashref";
+    }
+
+    override(
+        package => 'Pasteburn::Config',
+        name    => 'get',
+        subref  => sub { return $args{config} },
+    );
+
+    my $module_path = Cwd::realpath(__FILE__);
+    $module_path =~ s/\w+\.pm//;
+    my $app_dir = Cwd::realpath( $module_path . '../../../app/' );
+    $ENV{DANCER_CONFDIR} = $app_dir;
+    $ENV{DANCER_ENVIRONMENT} = 'development';
+
+    require Pasteburn;
+    my $app = Pasteburn->to_app;
+
+    require Plack::Test;
+    return Plack::Test->create( $app );
+}
+
 END {
     if ( $tempdir ) {
         if ( File::Path::rmtree($tempdir) ) {

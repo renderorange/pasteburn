@@ -1,5 +1,5 @@
 logger: 'file'
-log: 'info'
+log_level: 'info'
 show_errors: 0
 warnings: 0
 traces: 0

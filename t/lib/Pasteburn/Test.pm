@@ -5,8 +5,8 @@ use warnings;
 
 use File::Temp;
 use File::Path ();
-use Try::Tiny;
-use Cwd;
+use Try::Tiny  ();
+use Cwd        ();
 
 use parent 'Test::More';
 
@@ -119,10 +119,10 @@ sub init_db {
     }
     close( $schema_fh );
 
-    my $result = try {
+    my $result = Try::Tiny::try {
         return $dbh->do( $schema );
     }
-    catch {
+    Try::Tiny::catch {
         die "insert schema failed: $_\n";
     };
 
@@ -133,10 +133,10 @@ sub init_db {
     # until this is solved, just add the index within it's own statement.
     my $create_index_query = 'CREATE UNIQUE INDEX idx_secrets_id ON secrets (id)';
 
-    $result = try {
+    $result = Try::Tiny::try {
         return $dbh->do( $create_index_query );
     }
-    catch {
+    Try::Tiny::catch {
         die "insert index failed: $_\n";
     };
 

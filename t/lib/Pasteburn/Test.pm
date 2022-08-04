@@ -6,12 +6,16 @@ use warnings;
 use File::Temp;
 use File::Path ();
 use Try::Tiny;
+use Cwd;
 
 use parent 'Test::More';
 
 our $VERSION = '0.019';
 
 our ( $tempdir, $dbh );
+
+my $module_path = Cwd::realpath(__FILE__);
+$module_path =~ s/\w+\.pm//;
 
 sub import {
     my $class = shift;
@@ -107,8 +111,6 @@ sub init_db {
     $dbh = Pasteburn::DB::connect_db();
 
     my $schema;
-    my $module_path = Cwd::realpath(__FILE__);
-    $module_path =~ s/\w+\.pm//;
     my $schema_path = $module_path . '/../../../db/schema/schema.sqlite';
     open( my $schema_fh, '<', $schema_path )
         or die "open $schema_path: $!\n";
@@ -163,8 +165,6 @@ sub create_test_app {
         subref  => sub { return $args{config} },
     );
 
-    my $module_path = Cwd::realpath(__FILE__);
-    $module_path =~ s/\w+\.pm//;
     my $app_dir = Cwd::realpath( $module_path . '../../../app/' );
     $ENV{DANCER_CONFDIR} = $app_dir;
     $ENV{DANCER_ENVIRONMENT} = 'development';

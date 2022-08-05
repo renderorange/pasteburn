@@ -47,12 +47,21 @@ $request = HTTP::Request->new( $method, $endpoint, $headers, $data );
 note( 'submitted post' );
 $response = $test->request( $request );
 
-is( $response->code, 302, 'response is 302 redirect' );
+is( $response->code, 302, 'response code is 302 redirect' );
 like( $response->header('Location'), qr/\/secret\/\w+$/, 'response location header contains the new secret id' );
 
 my ( $secret_id ) = $response->header('Location') =~ /\/secret\/(\w+)$/;
 my $secret_from_db = $Pasteburn::Test::dbh->selectrow_hashref( "select * from secrets where id = ?", undef, ( $secret_id ) );
 
 ok( $secret_from_db->{id}, 'secret exists in the db' );
+
+$data = 'passphrase=&secret=test';
+$request = HTTP::Request->new( $method, $endpoint, $headers, $data );
+
+note( 'submitted post without passphrase' );
+$response = $test->request( $request );
+
+is( $response->code, 400, 'response code is 400' );
+like( $response->content, qr/error">The secret and passphrase parameters are required/, 'response content contains expected error message' );
 
 done_testing;

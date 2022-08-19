@@ -4,7 +4,6 @@ use warnings;
 use FindBin ();
 use lib "$FindBin::RealBin/../../lib", "$FindBin::RealBin/../../../lib";
 use Pasteburn::Test;
-use Pasteburn::Model::Secrets;
 
 use HTTP::Request ();
 

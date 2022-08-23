@@ -8,5 +8,4 @@ engines:
       cookie_name: 'pasteburn'
       cookie_same_site: 'Strict'
       is_http_only: 1
-      default_duration: 604800
       with_request_address: 1

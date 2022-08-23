@@ -4,7 +4,6 @@ use strictures version => 2;
 
 use Encode                   ();
 use Session::Storage::Secure ();
-use Time::Piece;
 
 our $VERSION = '0.020';
 
@@ -35,10 +34,7 @@ sub encode {
         die "secret argument is required\n";
     }
 
-    my $time    = localtime;
-    my $expires = $time->epoch + ( 86400 * 7 );
-
-    return $self->{_store_obj}->encode( $arg->{secret}, $expires );
+    return $self->{_store_obj}->encode( $arg->{secret} );
 }
 
 sub decode {

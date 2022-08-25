@@ -105,8 +105,10 @@ Once installed, enable and start the service.
 
 It's recommended to run Pasteburn proxy behind a frontend webserver.  The `app/apache.conf.example` file contains example `ProxyPass` settings for running behind Apache2.
 
-## AUTOMATICALLY DELETE OLD SECRETS
+## AUTOMATICALLY DELETE EXPIRED SECRETS
 
-To automatically delete old secrets after 7 days, create a cronjob to run the `bin/delete_expired_secrets.pl` script every minute.
+To automatically delete expired secrets after the configured secret age, create a cronjob to run the `bin/delete_expired_secrets.pl` script every minute.
 
     * * * * * export PERL5LIB=/opt/pasteburn/lib:$PERL5LIB; cd /opt/pasteburn/ && perl bin/delete_expired_secrets.pl
+
+To allow secrets to persist without an expiration, disable the cronjob to delete expired secrets.

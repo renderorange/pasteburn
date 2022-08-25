@@ -37,7 +37,7 @@ The Perl dependencies for this project are listed in the `cpanfile` within the r
 
 ## CONFIGURATION
 
-An example configuration file, `config.ini.example`, is provided in the project root directory.
+An example configuration file, `config.ini.example`, is provided in the examples directory.
 
 To set up the configuration file, copy the example into one of the following locations:
 
@@ -94,7 +94,7 @@ After creating the file, edit and update the values accordingly.
 
 ## EXAMPLE SYSTEMD AND APACHE2 CONFIGURATION
 
-The `app/pasteburn.service.example` file within the repo contains an example `systemd` configuration file.
+The `pasteburn.service.example` file within the examples directory contains an example `systemd` configuration file.
 
 Create the log file directories on the system, edit the paths and identifiers within the example file, then install and enable through systemd.
 
@@ -103,7 +103,7 @@ Once installed, enable and start the service.
     systemctl enable pasteburn
     systemctl start pasteburn
 
-It's recommended to run Pasteburn proxy behind a frontend webserver.  The `app/apache.conf.example` file contains example `ProxyPass` settings for running behind Apache2.
+It's recommended to run Pasteburn proxy behind a frontend webserver.  The `apache.conf.example` file within the examples directory contains example `ProxyPass` settings for running behind Apache2.
 
 ## AUTOMATICALLY DELETE EXPIRED SECRETS
 

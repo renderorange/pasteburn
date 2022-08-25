@@ -115,7 +115,7 @@ Required keys and values are validated during load, and exception thrown if not 
 
 =head1 CONFIGURATION
 
-An example configuration file, C<config.ini.example>, is provided in the project root directory.
+An example configuration file, C<config.ini.example>, is provided in the examples directory.
 
 To set up the configuration file, copy the example into one of the following locations:
 

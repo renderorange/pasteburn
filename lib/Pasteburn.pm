@@ -101,7 +101,7 @@ Pasteburn is built using the L<Dancer2 web framework|https://metacpan.org/pod/Da
 
 =head1 CONFIGURATION
 
-An example configuration file, C<config.ini.example>, is provided in the project root directory.
+An example configuration file, C<config.ini.example>, is provided in the examples directory.
 
 To set up the configuration file, copy the example into one of the following locations:
 

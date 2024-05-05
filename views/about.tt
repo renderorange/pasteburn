@@ -24,7 +24,7 @@
 
 <div class="section">
 <h3>Technologies this project uses</h3>
-<p>Pasteburn is built in Perl using the <a href="https://metacpan.org/pod/Dancer2">Dancer2 web framework</a>, <a href="http://getskeleton.com/">Skeleton CSS boilerplate</a>, and <a href="https://clipboardjs.com">clipboard.js JS library</a>. License information is available in the <a href="https://github.com/renderorange/pasteburn">Pasteburn repo</a>.</p>
+<p>Pasteburn is built in Perl using the <a href="https://metacpan.org/pod/Dancer2">Dancer2 web framework</a>, <a href="http://getskeleton.com/">Skeleton CSS boilerplate</a>, <a href="https://clipboardjs.com">clipboard.js JS library</a>, and <a href="https://github.com/necolas/normalize.css">normalize.css CSS library</a>. License information is available in the <a href="https://github.com/renderorange/pasteburn">Pasteburn repo</a>.</p>
 </div>
 
 [% INCLUDE includes/footer.tt %]

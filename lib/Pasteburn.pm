@@ -20,6 +20,7 @@ BEGIN {
         die("FATAL: session Cookie secret_key is not set");
     }
 
+    set secret     => $conf->{secret};
     set passphrase => $conf->{passphrase};
 
     set views  => config->{appdir} . 'views';
@@ -123,12 +124,17 @@ B<NOTE:> If the C<$ENV{HOME}/.config/pasteburn/> directory exists, C<config.ini>
 
 =item secret
 
-The C<secret> section key is required, and C<age> option key within it.
+The C<secret> section key is required, C<age> and C<scrub> option keys within it.
 
  [secret]
  age = 604800
+ scrub = 1
 
 To change the default time to expire secrets, change the C<age> value.  The value must be a positive integer.  The C<age> value is only enforced if running the C<delete_expired_secrets.pl> script, as noted below.
+
+If C<scrub> is set to 1, HTML tags will be removed from the secret string before storing and again as it's retrieved from the database.  If set to 0, HTML tags will not be removed from the secret.
+
+B<NOTE:> Setting C<scrub> to 0 means XSS vulnerabilities will be possible in the textarea box as it's displayed.  Disable this setting with caution.
 
 =item passphrase
 

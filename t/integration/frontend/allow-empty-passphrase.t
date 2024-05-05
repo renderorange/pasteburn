@@ -10,6 +10,7 @@ use HTTP::Request ();
 my $config = {
     secret => {
         age => 1,
+        scrub => 1,
     },
     passphrase => {
         allow_blank => 1,

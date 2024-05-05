@@ -1,5 +1,6 @@
 [secret]
 age = 604800
+scrub = 1
 [passphrase]
 allow_blank = 0
 [cookie]

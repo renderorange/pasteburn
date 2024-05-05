@@ -11,6 +11,7 @@ use_ok( $class );
 my $config_expected = {
     secret => {
         age => 1,
+        scrub => 1,
     },
     passphrase => {
         allow_blank => 0,
@@ -47,7 +48,7 @@ EXCEPTIONS: {
     };
 
     subtest 'dies if missing any of the config sub keys' => sub {
-        plan tests => 4;
+        plan tests => 5;
 
         foreach my $required ( keys %{ $config_expected } ) {
             foreach my $required_sub_key ( keys %{ $config_expected->{$required} } ) {

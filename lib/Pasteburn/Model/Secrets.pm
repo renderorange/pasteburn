@@ -12,6 +12,7 @@ use Pasteburn::Crypt::Hash    ();
 use Pasteburn::Crypt::Storage ();
 use Crypt::Random             ();
 use Digest::SHA               ();
+use HTML::Strip;
 
 use Moo;
 use MooX::ClassAttribute;
@@ -111,6 +112,10 @@ sub get {
 
 sub store {
     my $self = shift;
+    my $arg  = {
+        scrub => undef,
+        @_,
+    };
 
     foreach my $attribute ( 'passphrase', 'secret' ) {
         unless ( defined $self->{$attribute} ) {
@@ -122,6 +127,13 @@ sub store {
 
     my $crypt_hash        = Pasteburn::Crypt::Hash->new();
     my $hashed_passphrase = $crypt_hash->generate( string => $self->passphrase );
+
+    # strip html tags from secret before storing
+    if ( $arg->{scrub} ) {
+        my $html_strip = HTML::Strip->new();
+        $self->_set_secret( $html_strip->parse( $self->secret ) );
+        $html_strip->eof;
+    }
 
     my $crypt_storage  = Pasteburn::Crypt::Storage->new( passphrase => $self->passphrase );
     my $encoded_secret = $crypt_storage->encode( secret => $self->secret );
@@ -147,6 +159,8 @@ sub store {
     # set id into the object so we can _update_object using it as a select value.
     $self->_set_id($id);
 
+    # always update the object with the stored data from the database.
+    # we don't want the decoded secret or passphrase in the object.
     $self->_update_object;
 
     return $result;
@@ -222,6 +236,7 @@ sub decode_secret {
     my $self = shift;
     my $arg  = {
         passphrase => undef,
+        scrub      => undef,
         @_,
     };
 
@@ -237,8 +252,16 @@ sub decode_secret {
         die "passphrase is required";
     }
 
-    my $crypt_storage = Pasteburn::Crypt::Storage->new( passphrase => $arg->{passphrase} );
-    return $crypt_storage->decode( secret => $self->secret );
+    my $crypt_storage  = Pasteburn::Crypt::Storage->new( passphrase => $arg->{passphrase} );
+    my $decoded_secret = $crypt_storage->decode( secret => $self->secret );
+
+    if ( $arg->{scrub} ) {
+        my $html_strip = HTML::Strip->new();
+        $decoded_secret = $html_strip->parse($decoded_secret);
+        $html_strip->eof;
+    }
+
+    return $decoded_secret;
 }
 
 sub delete_secret {
@@ -288,7 +311,7 @@ Pasteburn::Model::Secrets - data access layer for Secrets
 
  my $secret_obj = Pasteburn::Model::Secrets->get( id => $id );
  $secret_obj->validate_passphrase( passphrase => $passphrase );
- my $decoded_secret = $secret_obj->decode_secret( passphrase => $passphrase );
+ my $decoded_secret = $secret_obj->decode_secret( passphrase => $passphrase, scrub => 1 );
 
  $secret_obj->delete_secret;
 
@@ -401,6 +424,10 @@ Object method to decode the stored secret using the submitted passphrase.
 =over
 
 =item passphrase
+
+=item scrub
+
+Truthy value indicating whether the secret string should have the HTML tags removed before returning.
 
 =back
 

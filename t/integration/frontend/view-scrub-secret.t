@@ -40,7 +40,8 @@ like( $response->content, qr/Create a secret message/, 'secret page is loaded' )
 $method   = 'POST';
 $endpoint = '/secret';
 my $passphrase = 'testpassphrase';
-my $secret = 'testsecret';
+my $secret_non_html = 'blaine was here text';
+my $secret = '</textarea><script>blaine was here script</script>' . $secret_non_html;
 
 $headers = [ 'Content-Type' => 'application/x-www-form-urlencoded' ];
 my $data = 'passphrase=' . $passphrase . '&secret=' . $secret;
@@ -60,22 +61,7 @@ $response = $test->request( $request );
 
 is( $response->code, 200, 'response code is 200' );
 
-my $regex = 'readonly>' . $secret . '<\/textarea';
+my $regex = 'readonly>' . $secret_non_html . '<\/textarea';
 like( $response->content, qr/$regex/, 'response content contains expected decoded secret' );
-
-$method  = 'GET';
-$headers = [];
-$request = HTTP::Request->new( $method, $endpoint, $headers, $data );
-
-note( 'submitted get to view deleted secret' );
-$response = $test->request( $request );
-
-is( $response->code, 302, 'response code is 302 redirect' );
-like( $response->header('Location'), qr/\/secret$/, 'response location header is to secret route' );
-
-# TODO:
-# implement cookie jar functionality to allow testing session related functionality
-# - get_session_response for error string if secret doesn't exist
-# - secret view differences if secret was created by the viewer (author template params)
 
 done_testing;

@@ -66,7 +66,7 @@ post q{/secret} => sub {
     }
 
     my $secret_obj = Pasteburn::Model::Secrets->new( secret => $secret, passphrase => $passphrase );
-    $secret_obj->store;
+    $secret_obj->store( scrub => config->{secret}{scrub} );
 
     my $session_secrets = session->read('secrets');
     $session_secrets->{ $secret_obj->id }{runmode} = 'new';
@@ -184,7 +184,7 @@ post q{/secret/:id} => sub {
         return template secret => $template_params;
     }
 
-    my $decoded_secret = $secret_obj->decode_secret( passphrase => $passphrase );
+    my $decoded_secret = $secret_obj->decode_secret( passphrase => $passphrase, scrub => config->{secret}{scrub} );
     if ($decoded_secret) {
 
         # this will not delete from the author session unless they also view it.

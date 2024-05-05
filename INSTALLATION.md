@@ -24,7 +24,7 @@ These instructions walk through a basic installation of the Pasteburn applicatio
 
 The Perl dependencies for this project are listed in the `cpanfile` within the repo.
 
-    cpanm -n Config::Tiny Crypt::Eksblowfish::Bcrypt Crypt::Random Cwd Dancer2 Dancer2::Session::Cookie Data::Structure::Util DBD::SQLite DBI Digest::SHA Encode Getopt::Long HTTP::Status Moo MooX::ClassAttribute namespace::clean Plack::Builder Plack::Middleware::TrailingSlashKiller Pod::Usage Scalar::Util Session::Storage::Secure strictures Template::Toolkit Time::Piece Try::Tiny
+    cpanm -n Config::Tiny Crypt::Eksblowfish::Bcrypt Crypt::Random Cwd Dancer2 Dancer2::Session::Cookie Data::Structure::Util DBD::SQLite DBI Digest::SHA Encode Getopt::Long HTML::Strip HTTP::Status Moo MooX::ClassAttribute namespace::clean Plack::Builder Plack::Middleware::TrailingSlashKiller Pod::Usage Scalar::Util Session::Storage::Secure strictures Template::Toolkit Time::Piece Try::Tiny
 
 ## CREATE THE DATABASE
 
@@ -50,12 +50,15 @@ After creating the file, edit and update the values accordingly.
 
 - secret
 
-    The `secret` section key is required, and `age` option key within it.
+    The `secret` section key is required, `age` and `scrub` option keys within it.
 
         [secret]
         age = 604800
+        scrub = 1
 
-    To change the default time to expire secrets, change the `age` value.  The value must be a positive integer.  The `age` value is only enforced if running the `delete_expired_secrets.pl` script, as noted below.
+    If `scrub` is set to 1, HTML tags will be removed from the secret string before storing and again as it's retrieved from the database.  If set to 0, HTML tags will not be removed from the secret.
+
+    NOTE: Setting `scrub` to 0 means XSS vulnerabilities will be possible in the textarea box as it's displayed.  Disable this setting with caution.
 
 - passphrase
 

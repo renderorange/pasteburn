@@ -13,7 +13,7 @@ jobs:
           sudo apt-get install cpanminus sqlite3
       - name: Install perl dependencies
         run: |
-          sudo cpanm -n Config::Tiny Crypt::Eksblowfish::Bcrypt Crypt::Random Cwd Dancer2 Dancer2::Session::Cookie Data::Structure::Util DBD::SQLite DBI Digest::SHA Encode Getopt::Long HTTP::Status Moo MooX::ClassAttribute namespace::clean Plack::Builder Plack::Middleware::TrailingSlashKiller Pod::Usage Scalar::Util Session::Storage::Secure strictures Template::Toolkit Time::Piece Try::Tiny
+          sudo cpanm -n Config::Tiny Crypt::Eksblowfish::Bcrypt Crypt::Random Cwd Dancer2 Dancer2::Session::Cookie Data::Structure::Util DBD::SQLite DBI Digest::SHA Encode Getopt::Long HTML::Strip HTTP::Status Moo MooX::ClassAttribute namespace::clean Plack::Builder Plack::Middleware::TrailingSlashKiller Pod::Usage Scalar::Util Session::Storage::Secure strictures Template::Toolkit Time::Piece Try::Tiny
       - name: Install perl test dependencies
         run: |
           # Test::More and File::Spec are provided by perl-modules-*

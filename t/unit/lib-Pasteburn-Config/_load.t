@@ -11,6 +11,7 @@ use_ok( $class );
 my $config_expected = {
     secret => {
         age => 1,
+        scrub => 1,
     },
     passphrase => {
         allow_blank => 0,

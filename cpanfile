@@ -10,6 +10,7 @@ requires 'DBI';
 requires 'Digest::SHA';
 requires 'Encode';
 requires 'Getopt::Long';
+requires 'HTML::Strip';
 requires 'HTTP::Status';
 requires 'Moo';
 requires 'MooX::ClassAttribute';

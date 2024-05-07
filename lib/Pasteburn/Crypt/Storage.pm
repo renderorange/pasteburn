@@ -5,7 +5,7 @@ use strictures version => 2;
 use Encode                   ();
 use Session::Storage::Secure ();
 
-our $VERSION = '0.021';
+our $VERSION = '0.022';
 
 sub new {
     my $class = shift;

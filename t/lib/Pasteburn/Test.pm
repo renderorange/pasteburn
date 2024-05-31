@@ -161,7 +161,7 @@ sub create_test_app {
 
     override(
         package => 'Pasteburn::Config',
-        name    => 'get',
+        name    => '_load',
         subref  => sub { return $args{config} },
     );
 

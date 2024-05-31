@@ -10,7 +10,7 @@ use Cwd        ();
 
 use parent 'Test::More';
 
-our $VERSION = '0.022';
+our $VERSION = '0.023';
 
 our ( $tempdir, $dbh );
 

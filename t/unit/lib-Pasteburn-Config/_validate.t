@@ -74,6 +74,18 @@ EXCEPTIONS: {
             $config_expected->{secret}{age} = $secret_age;
         }
     };
+
+    subtest 'dies if secret_key is default value' => sub {
+        plan tests => 1;
+
+        my $stored = delete $config_expected->{cookie}{secret_key};
+        $config_expected->{cookie}{secret_key} = 'default';
+
+        dies_ok { Pasteburn::Config::_validate( $config_expected ) }
+            "dies if cookie secret_key is default value";
+
+        $config_expected->{cookie}{secret_key} = $stored;
+    };
 }
 
 done_testing;

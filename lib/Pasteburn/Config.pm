@@ -71,7 +71,7 @@ sub _validate {
     }
 
     # verify cookie secret_key is set and isn't the default string in the example config
-    unless ( exists $config->{cookie}{secret_key} && defined $config->{cookie}{secret_key} ) {
+    unless ( exists $config->{cookie}{secret_key} && $config->{cookie}{secret_key} ) {
         die "config section cookie secret_key is required\n";
     }
 

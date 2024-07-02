@@ -16,10 +16,6 @@ BEGIN {
     my $conf = Pasteburn::Config->get();
     config->{engines}{session}{Cookie}{secret_key} = $conf->{cookie}{secret_key};
 
-    unless ( config->{engines}{session}{Cookie}{secret_key} ) {
-        die("FATAL: session Cookie secret_key is not set");
-    }
-
     set secret     => $conf->{secret};
     set passphrase => $conf->{passphrase};
 

@@ -51,7 +51,6 @@ sub _validate {
         }
     }
 
-    # verify secret age exists and is a positive value
     unless ( exists $config->{secret}{age} ) {
         die "config section secret age is required\n";
     }
@@ -60,27 +59,25 @@ sub _validate {
         die "config section secret age must be a positive integer\n";
     }
 
-    # verify secret scrub exists
-    unless ( exists $config->{secret}{scrub} ) {
+    unless ( exists $config->{secret}{scrub} && ( $config->{secret}{scrub} == 1 || $config->{secret}{scrub} == 0 ) ) {
         die "config section secret scrub is required\n";
     }
 
-    # verify passphrase allow_blank exists
-    unless ( exists $config->{passphrase}{allow_blank} ) {
+    unless ( exists $config->{passphrase}{allow_blank}
+        && ( $config->{passphrase}{allow_blank} == 1 || $config->{passphrase}{allow_blank} == 0 ) ) {
         die "config section passphrase allow_blank is required\n";
     }
 
-    # verify cookie secret_key is set and isn't the default string in the example config
     unless ( exists $config->{cookie}{secret_key} && $config->{cookie}{secret_key} ) {
         die "config section cookie secret_key is required\n";
     }
 
+    # verify cookie secret_key isn't the default string in the example config
     if ( $config->{cookie}{secret_key} eq 'default' ) {
         die "config section cookie secret_key is the default string and must be updated\n";
     }
 
-    # verify footer links exists
-    unless ( exists $config->{footer}{links} ) {
+    unless ( exists $config->{footer}{links} && ( $config->{footer}{links} == 1 || $config->{footer}{links} == 0 ) ) {
         die "config section footer links is required\n";
     }
 

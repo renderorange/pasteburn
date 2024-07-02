@@ -37,7 +37,7 @@ EXCEPTIONS: {
     subtest 'dies if missing any of the config keys' => sub {
         plan tests => 4;
 
-        foreach my $required ( keys %{ $config_expected } ) {
+        foreach my $required ( sort keys %{ $config_expected } ) {
             my $stored = delete $config_expected->{ $required };
 
             dies_ok { Pasteburn::Config::_validate( $config_expected ) }
@@ -50,8 +50,8 @@ EXCEPTIONS: {
     subtest 'dies if missing any of the config sub keys' => sub {
         plan tests => 5;
 
-        foreach my $required ( keys %{ $config_expected } ) {
-            foreach my $required_sub_key ( keys %{ $config_expected->{$required} } ) {
+        foreach my $required ( sort keys %{ $config_expected } ) {
+            foreach my $required_sub_key ( sort keys %{ $config_expected->{$required} } ) {
                 my $stored = delete $config_expected->{$required}{$required_sub_key};
 
                 dies_ok { Pasteburn::Config::_validate( $config_expected ) }
@@ -85,6 +85,57 @@ EXCEPTIONS: {
             "dies if cookie secret_key is default value";
 
         $config_expected->{cookie}{secret_key} = $stored;
+    };
+
+    subtest 'dies if secret_key is empty string' => sub {
+        plan tests => 1;
+
+        my $stored = delete $config_expected->{cookie}{secret_key};
+        $config_expected->{cookie}{secret_key} = '';
+
+        dies_ok { Pasteburn::Config::_validate( $config_expected ) }
+            "dies if cookie secret_key is default empty string";
+
+        $config_expected->{cookie}{secret_key} = $stored;
+    };
+
+    subtest 'dies if secret scrub does not validate value' => sub {
+        plan tests => 3;
+
+        my $secret_scrub = $config_expected->{secret}{scrub};
+        foreach my $value ( qw{ -1 2 a } ) {
+            $config_expected->{secret}{scrub} = $value;
+            dies_ok { Pasteburn::Config::_validate( $config_expected ) }
+                "dies if secret scrub is $value";
+
+            $config_expected->{secret}{scrub} = $secret_scrub;
+        }
+    };
+
+    subtest 'dies if passphrase allow_blank does not validate value' => sub {
+        plan tests => 3;
+
+        my $allow_blank = $config_expected->{passphrase}{allow_blank};
+        foreach my $value ( qw{ -1 2 a } ) {
+            $config_expected->{passphrase}{allow_blank} = $value;
+            dies_ok { Pasteburn::Config::_validate( $config_expected ) }
+                "dies if passphrase allow_blank is $value";
+
+            $config_expected->{passphrase}{allow_blank} = $allow_blank;
+        }
+    };
+
+    subtest 'dies if footer links does not validate value' => sub {
+        plan tests => 3;
+
+        my $links = $config_expected->{footer}{links};
+        foreach my $value ( qw{ -1 2 a } ) {
+            $config_expected->{footer}{links} = $value;
+            dies_ok { Pasteburn::Config::_validate( $config_expected ) }
+                "dies if footer links is $value";
+
+            $config_expected->{footer}{links} = $links;
+        }
     };
 }
 

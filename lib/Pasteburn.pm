@@ -22,7 +22,7 @@ BEGIN {
     set views  => config->{appdir} . 'views';
     set footer => $conf->{footer};
 
-    unless ( config->{views} ) {
+    if ( !config->{views} ) {
         die("FATAL: views is not set");
     }
 }
@@ -34,7 +34,7 @@ hook before => sub {
 
     foreach my $session_id ( keys %{$session_secrets} ) {
         my $secret_obj = Pasteburn::Model::Secrets->get( id => $session_id );
-        unless ($secret_obj) {
+        if ( !$secret_obj ) {
             delete $session_secrets->{$session_id};
         }
     }

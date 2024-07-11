@@ -34,7 +34,7 @@ sub _get_conf_path {
 sub _load {
     my $rc = _get_conf_path();
 
-    unless ( -f $rc ) {
+    if ( !-f $rc ) {
         die "$rc is not present";
     }
 
@@ -46,12 +46,12 @@ sub _validate {
 
     # verify required config sections
     foreach my $required (qw{ secret passphrase cookie footer }) {
-        unless ( exists $config->{$required} ) {
+        if ( !exists $config->{$required} ) {
             die "config section $required is required\n";
         }
     }
 
-    unless ( exists $config->{secret}{age} ) {
+    if ( !exists $config->{secret}{age} ) {
         die "config section secret age is required\n";
     }
 
@@ -59,16 +59,15 @@ sub _validate {
         die "config section secret age must be a positive integer\n";
     }
 
-    unless ( exists $config->{secret}{scrub} && ( $config->{secret}{scrub} == 1 || $config->{secret}{scrub} == 0 ) ) {
+    if ( !exists $config->{secret}{scrub} || $config->{secret}{scrub} !~ qr/^[0|1]$/ ) {
         die "config section secret scrub is required\n";
     }
 
-    unless ( exists $config->{passphrase}{allow_blank}
-        && ( $config->{passphrase}{allow_blank} == 1 || $config->{passphrase}{allow_blank} == 0 ) ) {
+    if ( !exists $config->{passphrase}{allow_blank} || $config->{passphrase}{allow_blank} !~ qr/^[0|1]$/ ) {
         die "config section passphrase allow_blank is required\n";
     }
 
-    unless ( exists $config->{cookie}{secret_key} && $config->{cookie}{secret_key} ) {
+    if ( !exists $config->{cookie}{secret_key} || !$config->{cookie}{secret_key} ) {
         die "config section cookie secret_key is required\n";
     }
 
@@ -77,7 +76,7 @@ sub _validate {
         die "config section cookie secret_key is the default string and must be updated\n";
     }
 
-    unless ( exists $config->{footer}{links} && ( $config->{footer}{links} == 1 || $config->{footer}{links} == 0 ) ) {
+    if ( !exists $config->{footer}{links} || $config->{footer}{links} !~ qr/^[0|1]$/ ) {
         die "config section footer links is required\n";
     }
 

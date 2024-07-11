@@ -26,7 +26,7 @@ sub load {
     $module_path =~ s/\w+\.pm//;
     my $db = Cwd::realpath( $module_path . '/../../db/pasteburn.sqlite3' );
 
-    unless ( -f $db ) {
+    if ( !-f $db ) {
         die "$db is not readable";
     }
 

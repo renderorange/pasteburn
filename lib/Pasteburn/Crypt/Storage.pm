@@ -14,7 +14,7 @@ sub new {
         @_,
     };
 
-    unless ( defined $arg->{passphrase} ) {
+    if ( !defined $arg->{passphrase} ) {
         die "passphrase argument is required\n";
     }
 
@@ -30,7 +30,7 @@ sub encode {
         @_,
     };
 
-    unless ( $arg->{secret} ) {
+    if ( !$arg->{secret} ) {
         die "secret argument is required\n";
     }
 
@@ -44,7 +44,7 @@ sub decode {
         @_,
     };
 
-    unless ( $arg->{secret} ) {
+    if ( !$arg->{secret} ) {
         die "secret argument is required\n";
     }
 

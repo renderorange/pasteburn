@@ -89,7 +89,7 @@ sub get {
     my ( @where, @bind_values );
 
     foreach my $key ( keys %{$arg} ) {
-        unless ( defined $arg->{$key} ) {
+        if ( !defined $arg->{$key} ) {
             next;
         }
 
@@ -103,7 +103,7 @@ sub get {
 
     my $secret_hashref = $class->_dbh->selectrow_hashref( $sql, undef, @bind_values );
 
-    unless ($secret_hashref) {
+    if ( !$secret_hashref ) {
         return;
     }
 
@@ -118,7 +118,7 @@ sub store {
     };
 
     foreach my $attribute ( 'passphrase', 'secret' ) {
-        unless ( defined $self->{$attribute} ) {
+        if ( !defined $self->{$attribute} ) {
             die "$attribute is required";
         }
     }
@@ -169,7 +169,7 @@ sub store {
 sub _generate_id {
     my $self = shift;
 
-    unless ( Scalar::Util::blessed($self) ) {
+    if ( !Scalar::Util::blessed($self) ) {
         die "_generate_id must be called as an object method";
     }
 
@@ -179,7 +179,7 @@ sub _generate_id {
 sub _update_object {
     my $self = shift;
 
-    unless ( Scalar::Util::blessed($self) ) {
+    if ( !Scalar::Util::blessed($self) ) {
         die "_update_object must be called as an object method";
     }
 
@@ -207,15 +207,15 @@ sub validate_passphrase {
         @_,
     };
 
-    unless ( Scalar::Util::blessed($self) ) {
+    if ( !Scalar::Util::blessed($self) ) {
         die "validate_passphrase must be called as an object method";
     }
 
-    unless ( $self->id ) {
+    if ( !$self->id ) {
         die "validate_passphrase cannot be run for a nonexistent secret";
     }
 
-    unless ( defined $arg->{passphrase} ) {
+    if ( !defined $arg->{passphrase} ) {
         die "passphrase is required";
     }
 
@@ -224,7 +224,7 @@ sub validate_passphrase {
     # the code up to this point will allow empty string submitted from the interface,
     # but not allow an undef to be stored.
     # although unlikely to fail, still verify the hashed passphrase is in the object.
-    unless ( defined $self->passphrase ) {
+    if ( !defined $self->passphrase ) {
         die "passphrase is not set";
     }
 
@@ -240,15 +240,15 @@ sub decode_secret {
         @_,
     };
 
-    unless ( Scalar::Util::blessed($self) ) {
+    if ( !Scalar::Util::blessed($self) ) {
         die "decode_secret must be called as an object method";
     }
 
-    unless ( $self->id ) {
+    if ( !$self->id ) {
         die "decode_secret cannot be run for a nonexistent secret";
     }
 
-    unless ( defined $arg->{passphrase} ) {
+    if ( !defined $arg->{passphrase} ) {
         die "passphrase is required";
     }
 
@@ -267,11 +267,11 @@ sub decode_secret {
 sub delete_secret {
     my $self = shift;
 
-    unless ( Scalar::Util::blessed($self) ) {
+    if ( !Scalar::Util::blessed($self) ) {
         die "delete_secret must be called as an object method";
     }
 
-    unless ( $self->id ) {
+    if ( !$self->id ) {
         die "delete_secret cannot be run for a nonexistent secret";
     }
 

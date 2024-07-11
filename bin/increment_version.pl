@@ -90,7 +90,7 @@ sub find_all_files {
     File::Find::find(
         sub {
             my $file = $File::Find::name;
-            return unless $file =~ /\.pm$/;
+            return if $file !~ /\.pm$/;
 
             push( @modules, File::Spec->abs2rel( $file, $dir ) );
         },

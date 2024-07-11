@@ -23,7 +23,7 @@ sub import {
 
     if ( $args{tests} ) {
         $class->builder->plan( tests => $args{tests} )
-            unless $args{tests} eq 'no_declare';
+            if $args{tests} ne 'no_declare';
     }
     elsif ( $args{skip_all} ) {
         $class->builder->plan( skip_all => $args{skip_all} );
@@ -34,7 +34,7 @@ sub import {
         CLEANUP => 0,
     );
 
-    unless ( $args{skip_db} ) {
+    if ( !$args{skip_db} ) {
         init_db();
     }
 
@@ -86,7 +86,7 @@ sub write_config {
     %{$config_tiny} = %{$args{config}};
 
     die( "unable to write config\n" )
-        unless $config_tiny->write( $rc );
+        if !$config_tiny->write( $rc );
 
     return $rc;
 }
@@ -150,12 +150,12 @@ sub create_test_app {
     );
 
     foreach my $required ( keys %args ) {
-        unless ( defined $args{$required} ) {
+        if ( !defined $args{$required} ) {
             die "$required is required";
         }
     }
 
-    unless ( ref $args{config} eq 'HASH' ) {
+    if ( !ref $args{config} eq 'HASH' ) {
         die "config must be a hashref";
     }
 

@@ -25,7 +25,7 @@ sub generate {
         @_,
     };
 
-    unless ( defined $arg->{string} ) {
+    if ( !defined $arg->{string} ) {
         die "string is required\n";
     }
 
@@ -63,11 +63,11 @@ sub validate {
         @_,
     };
 
-    unless ( $arg->{hash} ) {
+    if ( !$arg->{hash} ) {
         die "hash is required\n";
     }
 
-    unless ( defined $arg->{string} ) {
+    if ( !defined $arg->{string} ) {
         die "string is required\n";
     }
 
@@ -76,7 +76,7 @@ sub validate {
 
     my $input = $self->generate( string => $arg->{string}, salt => $salt );
 
-    return unless length($input) == length( $arg->{hash} );
+    return if length($input) != length( $arg->{hash} );
 
     my $match = 1;
     foreach my $i ( 0 .. length($input) - 1 ) {

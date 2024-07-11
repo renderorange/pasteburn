@@ -35,7 +35,7 @@ post q{/secret} => sub {
     };
 
     if ( config->{passphrase}{allow_blank} ) {
-        unless ($secret) {
+        if ( !$secret ) {
             $template_params->{message_type} = 'error';
             $template_params->{message}      = 'The secret parameter is required';
             response->{status} = HTTP::Status::HTTP_BAD_REQUEST;
@@ -43,7 +43,7 @@ post q{/secret} => sub {
         }
     }
     else {
-        unless ( $secret && $passphrase ) {
+        if ( !$secret || !$passphrase ) {
             $template_params->{message_type} = 'error';
             $template_params->{message}      = 'The secret and passphrase parameters are required';
             response->{status} = HTTP::Status::HTTP_BAD_REQUEST;
@@ -86,7 +86,7 @@ get q{/secret/:id} => sub {
 
     # check the db for the secret.
     my $secret_obj = Pasteburn::Model::Secrets->get( id => $id );
-    unless ($secret_obj) {
+    if ( !$secret_obj ) {
         my $session_secrets = session->read('secrets');
         if ( exists $session_secrets->{$id} ) {
             delete $session_secrets->{$id};
@@ -134,7 +134,7 @@ post q{/secret/:id} => sub {
 
     # check the db for the secret.
     my $secret_obj = Pasteburn::Model::Secrets->get( id => $id );
-    unless ($secret_obj) {
+    if ( !$secret_obj ) {
         Pasteburn::set_session_response(
             {   type    => 'error',
                 message => 'That secret does not exist or has expired',
@@ -177,7 +177,7 @@ post q{/secret/:id} => sub {
         return template secret => $template_params;
     }
 
-    unless ( $secret_obj->validate_passphrase( passphrase => $passphrase ) ) {
+    if ( !$secret_obj->validate_passphrase( passphrase => $passphrase ) ) {
         $template_params->{message_type} = 'error';
         $template_params->{message}      = 'That passphrase is not correct';
         response->{status} = HTTP::Status::HTTP_UNAUTHORIZED;

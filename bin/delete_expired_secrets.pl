@@ -26,7 +26,7 @@ catch {
     die "select secrets failed: $exception";
 };
 
-exit unless @secrets;
+exit if !@secrets;
 
 my @bind_values;
 foreach my $secret_hashref (@secrets) {

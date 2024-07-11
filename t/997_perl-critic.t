@@ -5,7 +5,7 @@ use FindBin;
 use File::Spec;
 use Test::More;
 
-unless ( $ENV{TEST_AUTHOR} ) {
+if ( !$ENV{TEST_AUTHOR} ) {
     my $msg = 'Author test. Set $ENV{TEST_AUTHOR} to a true value to run.';
     plan( skip_all => $msg );
 }

@@ -55,7 +55,7 @@ EXCEPTIONS: {
                 my $stored = delete $config_expected->{$required}{$required_sub_key};
 
                 dies_ok { Pasteburn::Config::_validate( $config_expected ) }
-                    "dies if config is missing $required $required_sub_key key";
+                    "dies if config is missing $required $required_sub_key";
 
                 $config_expected->{$required}{$required_sub_key} = $stored;
             }

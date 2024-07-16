@@ -110,7 +110,7 @@ C<Pasteburn::Config> loads the project config.
 
 Load the config and return a C<Pasteburn::Config> object.
 
-Required keys and values are validated during load, and exception thrown if not defined or containing the default values.
+Required keys and values are validated during load, and exception thrown if key does not exist and doesn't match the expected values.
 
 =back
 

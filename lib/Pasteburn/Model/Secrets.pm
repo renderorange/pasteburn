@@ -88,7 +88,7 @@ sub get {
 
     my ( @where, @bind_values );
 
-    foreach my $key ( keys %{$arg} ) {
+    foreach my $key (qw{id}) {
         if ( !defined $arg->{$key} ) {
             next;
         }
@@ -117,7 +117,7 @@ sub store {
         @_,
     };
 
-    foreach my $attribute ( 'passphrase', 'secret' ) {
+    foreach my $attribute (qw{passphrase secret}) {
         if ( !defined $self->{$attribute} ) {
             die "$attribute is required";
         }
@@ -170,7 +170,7 @@ sub _generate_id {
     my $self = shift;
 
     if ( !Scalar::Util::blessed($self) ) {
-        die "_generate_id must be called as an object method";
+        die '_generate_id must be called as an object method';
     }
 
     return Digest::SHA::sha256_hex( Crypt::Random::makerandom( Size => 512, Strength => 0 ) );
@@ -180,7 +180,7 @@ sub _update_object {
     my $self = shift;
 
     if ( !Scalar::Util::blessed($self) ) {
-        die "_update_object must be called as an object method";
+        die '_update_object must be called as an object method';
     }
 
     # always update the object with the data from the database.
@@ -208,15 +208,15 @@ sub validate_passphrase {
     };
 
     if ( !Scalar::Util::blessed($self) ) {
-        die "validate_passphrase must be called as an object method";
+        die 'validate_passphrase must be called as an object method';
     }
 
     if ( !$self->id ) {
-        die "validate_passphrase cannot be run for a nonexistent secret";
+        die 'validate_passphrase cannot be run for a nonexistent secret';
     }
 
     if ( !defined $arg->{passphrase} ) {
-        die "passphrase is required";
+        die 'passphrase is required';
     }
 
     # if the secret is stored with an empty string as passphrase, there is still
@@ -225,7 +225,7 @@ sub validate_passphrase {
     # but not allow an undef to be stored.
     # although unlikely to fail, still verify the hashed passphrase is in the object.
     if ( !defined $self->passphrase ) {
-        die "passphrase is not set";
+        die 'passphrase is not set';
     }
 
     my $crypt = Pasteburn::Crypt::Hash->new();
@@ -241,15 +241,15 @@ sub decode_secret {
     };
 
     if ( !Scalar::Util::blessed($self) ) {
-        die "decode_secret must be called as an object method";
+        die 'decode_secret must be called as an object method';
     }
 
     if ( !$self->id ) {
-        die "decode_secret cannot be run for a nonexistent secret";
+        die 'decode_secret cannot be run for a nonexistent secret';
     }
 
     if ( !defined $arg->{passphrase} ) {
-        die "passphrase is required";
+        die 'passphrase is required';
     }
 
     my $crypt_storage  = Pasteburn::Crypt::Storage->new( passphrase => $arg->{passphrase} );
@@ -268,11 +268,11 @@ sub delete_secret {
     my $self = shift;
 
     if ( !Scalar::Util::blessed($self) ) {
-        die "delete_secret must be called as an object method";
+        die 'delete_secret must be called as an object method';
     }
 
     if ( !$self->id ) {
-        die "delete_secret cannot be run for a nonexistent secret";
+        die 'delete_secret cannot be run for a nonexistent secret';
     }
 
     my $sql = q{

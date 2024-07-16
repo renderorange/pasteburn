@@ -149,14 +149,14 @@ sub create_test_app {
         @_,
     );
 
-    foreach my $required ( keys %args ) {
+    foreach my $required ( qw{config} ) {
         if ( !defined $args{$required} ) {
             die "$required is required";
         }
     }
 
     if ( !ref $args{config} eq 'HASH' ) {
-        die "config must be a hashref";
+        die 'config must be a hashref';
     }
 
     override(

@@ -30,7 +30,7 @@ sub encode {
         @_,
     };
 
-    if ( !$arg->{secret} ) {
+    if ( !defined $arg->{secret} ) {
         die "secret argument is required\n";
     }
 
@@ -44,7 +44,7 @@ sub decode {
         @_,
     };
 
-    if ( !$arg->{secret} ) {
+    if ( !defined $arg->{secret} ) {
         die "secret argument is required\n";
     }
 

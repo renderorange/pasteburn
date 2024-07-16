@@ -63,7 +63,7 @@ sub validate {
         @_,
     };
 
-    if ( !$arg->{hash} ) {
+    if ( !defined $arg->{hash} ) {
         die "hash is required\n";
     }
 

@@ -83,10 +83,10 @@ sub write_config {
     require Config::Tiny;
 
     my $config_tiny = Config::Tiny->new;
-    %{$config_tiny} = %{$args{config}};
+    %{$config_tiny} = %{ $args{config} };
 
-    die( "unable to write config\n" )
-        if !$config_tiny->write( $rc );
+    die("unable to write config\n")
+        if !$config_tiny->write($rc);
 
     return $rc;
 }
@@ -95,9 +95,9 @@ sub init_db {
     my $db_path = $tempdir . '/test.sqlite3';
     open( my $db_fh, '>', $db_path )
         or die "open $db_path: $!\n";
-    close( $db_fh );
+    close($db_fh);
 
-    Test::More::note( "created test db - $db_path" );
+    Test::More::note("created test db - $db_path");
 
     override(
         package => 'Pasteburn::DB',
@@ -117,10 +117,10 @@ sub init_db {
     while ( my $row = <$schema_fh> ) {
         $schema .= $row;
     }
-    close( $schema_fh );
+    close($schema_fh);
 
     my $result = Try::Tiny::try {
-        return $dbh->do( $schema );
+        return $dbh->do($schema);
     }
     Try::Tiny::catch {
         die "insert schema failed: $_\n";
@@ -134,7 +134,7 @@ sub init_db {
     my $create_index_query = 'CREATE UNIQUE INDEX idx_secrets_id ON secrets (id)';
 
     $result = Try::Tiny::try {
-        return $dbh->do( $create_index_query );
+        return $dbh->do($create_index_query);
     }
     Try::Tiny::catch {
         die "insert index failed: $_\n";
@@ -149,7 +149,7 @@ sub create_test_app {
         @_,
     );
 
-    foreach my $required ( qw{config} ) {
+    foreach my $required (qw{config}) {
         if ( !defined $args{$required} ) {
             die "$required is required";
         }
@@ -166,23 +166,23 @@ sub create_test_app {
     );
 
     my $app_dir = Cwd::realpath( $module_path . '../../../app/' );
-    $ENV{DANCER_CONFDIR} = $app_dir;
+    $ENV{DANCER_CONFDIR}     = $app_dir;
     $ENV{DANCER_ENVIRONMENT} = 'development';
 
     require Pasteburn;
     my $app = Pasteburn->to_app;
 
     require Plack::Test;
-    return Plack::Test->create( $app );
+    return Plack::Test->create($app);
 }
 
 END {
-    if ( $tempdir ) {
+    if ($tempdir) {
         if ( File::Path::rmtree($tempdir) ) {
-            Test::More::note( "cleaned up tempdir - $tempdir" );
+            Test::More::note("cleaned up tempdir - $tempdir");
         }
         else {
-            Test::More::diag( "rmtree: $!\n" );
+            Test::More::diag("rmtree: $!\n");
         }
     }
 }

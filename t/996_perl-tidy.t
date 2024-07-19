@@ -17,6 +17,7 @@ if ($@) {
 }
 
 Test::PerlTidy::run_tests(
-    path       => "$FindBin::RealBin/../lib",
+    path       => "$FindBin::RealBin/..",
     perltidyrc => "$FindBin::RealBin/../.perltidyrc",
+    exclude    => [ qr{\.t$}, "$FindBin::RealBin/../tmp", "$FindBin::RealBin/../backup", "$FindBin::RealBin/../.git", "$FindBin::RealBin/../.github" ],
 );

@@ -24,7 +24,7 @@ These instructions walk through a basic installation of the Pasteburn applicatio
 
 The Perl dependencies for this project are listed in the `cpanfile` within the repo.
 
-    cpanm -n Config::Tiny Crypt::Eksblowfish::Bcrypt Crypt::Random Cwd Dancer2 Dancer2::Session::Cookie Data::Structure::Util DBD::SQLite DBI Digest::SHA Encode Getopt::Long HTML::Strip HTTP::Status Moo MooX::ClassAttribute namespace::clean Plack::Builder Plack::Middleware::TrailingSlashKiller Pod::Usage Scalar::Util Session::Storage::Secure strictures Template::Toolkit Time::Piece Try::Tiny
+    cpanm -n Config::Tiny Crypt::Eksblowfish::Bcrypt Crypt::Random Cwd Dancer2 Dancer2::Session::Cookie Data::Structure::Util DBD::SQLite DBI Digest::SHA Encode Getopt::Long HTML::Strip HTTP::Status Moo MooX::ClassAttribute namespace::clean Plack::Builder Plack::Middleware::TrailingSlashKiller Pod::Usage Scalar::Util Session::Storage::Secure strictures Template::Toolkit Time::Piece Try::Tiny Starman
 
 ## CREATE THE DATABASE
 
